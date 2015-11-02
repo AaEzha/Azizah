@@ -130,11 +130,11 @@ if(isset($_GET['act'])){
 								  <div class="panel-heading">
 										<h3 class="panel-title"><?=$dq['MESSAGE'];?></h3>
 								  </div>
-								  <div class="panel-footer">
+								  <div class="panel-footer text-<?=$p;?>">
 										oleh 
 										<?php
 										if($_SESSION['iddetail']==$dq['SENDER_ID']){
-											echo "Kamu,";
+											echo "Anda,";
 										}else{
 										?>
 										<?=ambildata($dq['SENDER_ID'],'user_detail','FIRSTNAME');?> <?=ambildata($dq['SENDER_ID'],'user_detail','LASTNAME');?>

@@ -1,7 +1,7 @@
 <br><h1>Pending Intern</h1>
 <?=tabel();?>
 <?php
-if(isset($_POST['intern'])){
+if(isset($_POST['iduserdetail'])){
 	$id = $_SESSION['iddetail'];
 	$unitid = ambildata($id,'user_detail','UNIT_ID');
 
@@ -23,22 +23,35 @@ if(isset($_POST['intern'])){
     $week = "5";
   }
 
-  $intern = $_POST['intern'];
+  
+  
   $iduserdetail = $_POST['iduserdetail'];
   $topik = $_POST['topik'];
-  for($x=0; $x<count($intern); $x++){
-    mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='APPROVED', UNIT_ID='$unitid' where GUID='".$intern[$x]."'");
-    mysql_query("update user_detail set UNIT_ID='$unitid' where GUID='".$iduserdetail[$x]."'");
-    mysql_query("update quota set ".$qw."=".$qw."-'1' where TOPIC_ID='".$topik[$x]."'");
-  }
 
+  if(isset($_POST['intern'])){
+    $intern = $_POST['intern'];
+    for($x=0; $x<count($intern); $x++){
+      mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='APPROVED', UNIT_ID='$unitid' where GUID='".$intern[$x]."'");
+      mysql_query("update user_detail set DTMUPD=now(), USRUPD='".$_SESSION['username']."', UNIT_ID='$unitid' where GUID='".$iduserdetail[$x]."'");
+      mysql_query("update quota set DTMUPD=now(), USRUPD='".$_SESSION['username']."', ".$qw."=".$qw."-'1' where TOPIC_ID='".$topik[$x]."'");
+    }
+  }
+  
+  if(isset($_POST['intern'])){
+    $rijek = $_POST['rijek'];
+    for($y=0; $y<count($rijek); $y++){
+      mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='REJECTED', UNIT_ID='$unitid' where GUID='".$rijek[$y]."'");
+    }
+  }
+/*
 	foreach ($_POST['intern'] as $intern) {
 		mysql_query("update internship_registration set STATUS='APPROVED', UNIT_ID='$unitid' where GUID='$intern'");
 	}
 	foreach ($_POST['iduserdetail'] as $iduserdetail) {
 		mysql_query("update user_detail set UNIT_ID='$unitid' where GUID='$iduserdetail'");
 	}
-	eksyen('Saved!','inside.php');
+*/
+	eksyen('Saved!','inside.php#internship');
 }
 ?>
 <form action="" method="post">
@@ -50,7 +63,8 @@ if(isset($_POST['intern'])){
       <th class="col-md-2 text-center">Program</th>
       <th class="text-center">Topik/Referensi</th>
       <th class="col-md-2 text-center">Periode</th>
-      <th class="col-md-2 text-center">Action</th>
+      <th class="col-md-1 text-center">Accept</th>
+      <th class="col-md-1 text-center">Reject</th>
     </tr>
   </thead>
   <tbody>
@@ -70,13 +84,14 @@ if(isset($_POST['intern'])){
       <td class="text-center"><?=ambildata($d['MASTER_TOPIC_ID'],'master_topic','TOPIC_NAME');?></td>
       <td class="text-center"><?=$d['START_DATE'];?> / <?=$d['END_DATE'];?></td>
       <td class="text-center"><input type="checkbox" name="intern[]" value="<?=$d['GUID'];?>"></td>
+      <td class="text-center"><input type="checkbox" name="rijek[]" value="<?=$d['GUID'];?>"></td>
     </tr>
   <?php $i++; } ?>
   </tbody>
   <tfoot>
   	<tr>
   	  <td colspan="5"></td>
-  	  <td><input type="submit" class="btn btn-block btn-info" value="Pilih"></td>
+  	  <td colspan="2"><input type="submit" class="btn btn-block btn-info" value="Pilih"></td>
   	</tr>
   </tfoot>
 </table>
