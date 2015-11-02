@@ -66,28 +66,37 @@ $idmajor = ambildata('x','user_education','MAJOR_ID','USER_DETAIL_ID="'.$idinter
 <div class="col-md-3">
 	<div class="panel panel-info">
 		  <div class="panel-heading">
-				<h3 class="panel-title">Panel title</h3>
+				<h3 class="panel-title">Clearance Letter</h3>
 		  </div>
 		  <div class="panel-body">
 				<a type="button" class="btn btn-info btn-block">button</a>
 		  </div>
 	</div>
 
-	<div class="panel panel-primary">
+	<div class="panel panel-danger">
 		  <div class="panel-heading">
-				<h3 class="panel-title">Panel title</h3>
+				<h3 class="panel-title">Clearance Letter</h3>
 		  </div>
 		  <div class="panel-body">
-				<a type="button" class="btn btn-primary btn-block">button</a>
+				<a type="button" class="btn btn-danger btn-block">button</a>
 		  </div>
 	</div>
 
 	<div class="panel panel-success">
 		  <div class="panel-heading">
-				<h3 class="panel-title">Panel title</h3>
+				<h3 class="panel-title">Achievement Letter</h3>
 		  </div>
 		  <div class="panel-body">
 				<a type="button" class="btn btn-success btn-block">button</a>
+		  </div>
+	</div>
+
+	<div class="panel panel-primary">
+		  <div class="panel-heading">
+				<h3 class="panel-title">Thank You Letter</h3>
+		  </div>
+		  <div class="panel-body">
+				<a type="button" class="btn btn-primary btn-block">button</a>
 		  </div>
 	</div>
 </div>
