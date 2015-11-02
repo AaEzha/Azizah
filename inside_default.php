@@ -21,8 +21,8 @@ if($_b['LASTNAME']==''){
     <div class="span5 contact-form centered">
           <h3>Welcome, <?php Print $_SESSION['firstname']; ?></h3>
             <?php
-            $sesuser = $_SESSION['username'];
-            print "<img width='200' height='150' src='tampil.php?u=$sesuser'>";
+            $sesuser = $_SESSION['iddetail'];
+            echo "<img width='200' height='150' src='tampil.php?u=$sesuser'>";
             ?>
           <table width="280" border="0" cellspacing="0" cellpadding="0">
             <tr>

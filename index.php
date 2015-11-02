@@ -78,7 +78,9 @@ if(isset($_SESSION['username'])){
           });
 
           $( "#tgl" ).datepicker({
-            dateFormat: "yy-mm-dd"
+            dateFormat: "yy-mm-dd",
+            changeYear:true,
+            changeMonth:true
           });
         });
         </script>

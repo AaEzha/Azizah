@@ -32,7 +32,7 @@ if(isset($_POST['namadepan'])){
 	    $photo = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
 	    $photo = mysql_real_escape_string($photo) or die("Tidak dapat membaca source file"); // parse image ke string
 	    fclose($fp); // tutup file
-	    mysql_query("update user_detail set PHOTO='$photo' where USER_ID='$iduser'");
+	    mysql_query("update user_detail set PHOTO='$photo', MIME_PHOTO='$file_type' where USER_ID='$iduser'");
 	    //--------------------------photo----------------------------------//
 	}
 
@@ -46,7 +46,7 @@ if(isset($_POST['namadepan'])){
 	    $cv = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
 	    $cv = mysql_real_escape_string($cv) or die("Tidak dapat membaca source file"); // parse image ke string
 	    fclose($fp); // tutup file
-	    mysql_query("update user_detail set CV='$cv' where USER_ID='$iduser'");
+	    mysql_query("update user_detail set CV='$cv', MIME_CV='$file_type' where USER_ID='$iduser'");
 	    //--------------------------cv----------------------------------//
 	}
 
