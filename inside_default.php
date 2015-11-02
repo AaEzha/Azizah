@@ -425,64 +425,65 @@ if($_b['LASTNAME']==''){
 <div id="comment" class="comment">
   <div class="section third-section" style="background:#000">
     <div class="container">
-      <div class="title">
-        <h1 style="color:#05B1EB">Comment</h1>
+      <div class="text-center">
+        <h1 style="color:#05B1EB">Message</h1>
       </div>
       <div class="col-md-12">
+      <?php if($_SESSION['grup']=='USER'){ ?>
+        <?php
+        $qr = mysql_query("select STATUS from internship_registration where USER_DETAIL_ID='".$_SESSION['iddetail']."' and STATUS!='REJECTED' and STATUS!='PENDING'");
+        $qrc = mysql_num_rows($qr);
+        if($qrc>=1){ ?>
         <table class="table">
+          <tbody>
+            <tr>
+              <td class="text-right"><a href="?p=message&act=addnew" class="btn btn-primary btn-sm">Kirim Tiket Baru</a>
+            </tr>
+          </tbody>
+        </table>
+      <?php 
+        }
+      } 
+      ?>
+        <table class="table" id="tbl">
           <thead>
             <tr>
-              <th class="col-md-1">No</th>
-              <th class="col-md-2">Intern</th>
-              <th class="col-md-2">Dibalas oleh</th>
-              <th class="col-md-2">Waktu</th>
-              <th>Komentar</th>
-              <th class="col-md-1">Aksi</th>
+              <th class="col-md-1 text-center">No</th>
+              <th class="col-md-2 text-center">Nama Intern</th>
+              <th class="text-center">Judul</th>
+              <th class="col-md-2 text-center">Unit</th>
+              <th class="col-md-2 text-center">Waktu</th>
+              <th class="col-md-1 text-center">Status</th>
+              <th class="col-md-1 text-center">Aksi</th>
             </tr>
           </thead>
           <tbody>
             <?php
             $i=1;
             if($_SESSION['grup']!='USER'){
-              $qc = mysql_query("select m.GUID as guid, m.MESSAGE as pesan, m.DTMCRT as waktu, m.INTERN_ID as intern, m.SENDER_ID as pengirim, m.UNIT_ID as unit from message m
-                               join internship_registration ir
-                               join user_detail ud
-                               join unit u
-                               on m.UNIT_ID=u.GUID
-                               and m.INTERN_ID=ir.GUID
-                               where ir.STATUS in ('APPROVED','IN PROGRESS')
-                               group by intern
-                               order by date(waktu) asc");
+              // unit id
+              $unitid = ambildata($_SESSION['iddetail'],'user_detail','UNIT_ID');
+              $qc = mysql_query("select * from message where UNIT_ID='$unitid' group by MESSAGE_ID order by DTMCRT desc");
             }else{
-              $unit = ambildata($_SESSION['iddetail'],'user_detail','UNIT_ID');
-              $qc = mysql_query("select m.GUID as guid, m.MESSAGE as pesan, m.DTMCRT as waktu, m.INTERN_ID as intern, m.SENDER_ID as pengirim, m.UNIT_ID as unit from message m
-                               join internship_registration ir
-                               join user_detail ud
-                               join unit u
-                               on m.UNIT_ID=u.GUID
-                               and m.INTERN_ID=ir.GUID
-                               where ir.STATUS in ('APPROVED','IN PROGRESS')
-                               and m.UNIT_ID='$unit'
-                               group by intern
-                               order by date(waktu) asc");
+              $qc = mysql_query("select * from message where SENDER_ID='".$_SESSION['iddetail']."' group by MESSAGE_ID order by DTMCRT desc");
             }
-            while($dc = mysql_fetch_array($qc)){
-              // intern
-              $interid = $dc['intern'];
-              $udetail = ambildata($interid,'internship_registration','USER_DETAIL_ID');
-              // komentar terakhir
-              $gk = $dc['guid'];
-              $q = mysql_query("select MESSAGE from message where INTERN_ID='$interid' order by DTMCRT desc");
-              $qq = mysql_fetch_array($q);
-              $pesannya = $qq['MESSAGE'];
+            while($d = mysql_fetch_array($qc)){
+              $internid = $d['INTERN_ID'];
+              $id_si_intern = ambildata($internid,'internship_registration','USER_DETAIL_ID');
+              // last time
+              $q2 = mysql_query("select * from message where MESSAGE_ID='".$d['MESSAGE_ID']."' order by DTMCRT desc limit 1");
+              $d2 = mysql_fetch_array($q2);
+
+              // last status
             ?>
             <tr>
-              <td><?=$i;?></td>
-              <td><?=ambildata($udetail,'user_detail','FIRSTNAME');?> <?=ambildata($udetail,'user_detail','LASTNAME');?></td>
-              <td><?=ambildata($dc['pengirim'],'user_detail','FIRSTNAME');?> <?=ambildata($dc['pengirim'],'user_detail','LASTNAME');?></td>
-              <td><?php echo $dc['waktu'];?></td>
-              <td><?=$pesannya;?></td>
-              <td><a href="?p=balas&i=<?=$dc['intern'];?>&u=<?=$dc['unit'];?>" class="btn btn-info btn-xs">balas</a></td>
+              <td class="text-center"><?=$i;?></td>
+              <td class="text-center"><?=ambildata($id_si_intern,'user_detail','FIRSTNAME');?> <?=ambildata($id_si_intern,'user_detail','LASTNAME');?></td>
+              <td class="text-center"><?=$d['TITLE'];?></td>
+              <td class="text-center"><?=ambildata($d['UNIT_ID'],'unit','UNIT_NAME');?></td>
+              <td class="text-center"><?=$d2['DTMCRT'];?></td>
+              <td class="text-center"><?=$d2['STATUS'];?></td>
+              <td class="text-center"><a href="?p=message&act=reply&i=<?=$d['MESSAGE_ID'];?>" class="btn btn-info btn-xs">balas</a></td>
             </tr>
             <?php $i++; } ?>
           </tbody>
