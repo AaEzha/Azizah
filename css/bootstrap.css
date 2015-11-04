@@ -1586,10 +1586,12 @@ pre code {
   overflow-y: scroll;
 }
 .container {
+  position: relative;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+  min-height: 100%;
 }
 @media (min-width: 768px) {
   .container {

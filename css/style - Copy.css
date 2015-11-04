@@ -1,13 +1,17 @@
 /*
 1. General
 **********************************************************************/
+ html{
+    position: relative;
+    min-height: 100%;
+ }
  body {
 	color: #fff;
 	line-height:1.2em;
 	font-size:12px;
 	line-height:20px;
-	background-color: #FFFFFF;
-	background: #FFFFFF;
+	background-color: #FFF;
+	background: #181A1C url(../images/brand-bg.png) repeat center;
 }
 a {
 	color:#065671;
@@ -357,6 +361,11 @@ p {
 .secondary-section h1, .secondary-section .title p {
 	color: #000000;
 }
+/* AaEzha Section */
+.aaezha{
+    background-color: transparent !important;
+}
+
 /* Third section use bacground image repeat */
 .third-section {
     padding-bottom: 70px;
@@ -820,6 +829,9 @@ p {
 3.8 Footer
 ********************************************************************/
  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     background: #333333;
     text-align: center;
 }

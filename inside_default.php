@@ -108,6 +108,15 @@ if($_b['LASTNAME']==''){
           <div align="center"><a href="?p=quota" class="style38 style1">QUOTA</a></div>
         </div></td>
       </tr>
+      <tr>
+        <td width="33%" height="113" bgcolor="#33C6F4"><div align="center" class="style39"><a href="?p=letter" class="style38">LETTER</a></div></td>
+        <td width="33%" height="113" bgcolor="#89E1F3"><div align="center" class="style30"><a href="?p=major" class="style38">xxx</a></div></td>
+        <td width="33%" height="113" bgcolor="#0F91AC"><div align="center" class="style39">
+          <div align="center">
+            <p><a href="?p=education-level"  class="style1"><strong>xxx</strong></a></p>
+            </div>
+        </div></td>
+      </tr>
     <?php } ?>
     <?php if($_SESSION['grup']=='LCU'){ ?>
       <tr>

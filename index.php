@@ -24,6 +24,9 @@ if ($tgl>="1" and $tgl<="7") {
 
 $qk = mysql_query("select * from quota where MONTH='$bln', YEAR='$thn', ".$qw."is NULL");
 $ck = mysql_num_rows($qk);
+if($ck==0){
+  $rk = mysql_query("select * from quota where ");
+}
 
 if(isset($_SESSION['username'])){
   header("location:inside.php");

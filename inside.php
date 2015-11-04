@@ -214,8 +214,9 @@ $dud = mysql_fetch_array($qud);
 if(isset($_GET['p'])){
   $p = mysql_real_escape_string($_GET['p']);
 ?>
-<div class="section third-section" id="mastersetting">
+<div class="section aaezha" id="mastersetting">
 <div class="container">
+<p>&nbsp;</p>
 <?php
   include $p.'.php';
 ?>

@@ -6,6 +6,8 @@ if(isset($_POST['iduserdetail'])){
 	$unitid = ambildata($id,'user_detail','UNIT_ID');
 
   $tgl = date('d');
+  $bln = date('m');
+  $thn = date('Y');
   if ($tgl>="1" and $tgl<="7") {
     $qw = "WEEK1";
     $week = "1";
@@ -31,13 +33,16 @@ if(isset($_POST['iduserdetail'])){
   if(isset($_POST['intern'])){
     $intern = $_POST['intern'];
     for($x=0; $x<count($intern); $x++){
+      // cek dulu, quotanya sudah ada atau belum
+      $q = mysql_query("select * from quota where ".$qw."is NULL and MONTH='$bln' and YEAR='$thn' and TOPIC_ID='".$topik[$x]."'");
+
       mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='APPROVED', UNIT_ID='$unitid' where GUID='".$intern[$x]."'");
       mysql_query("update user_detail set DTMUPD=now(), USRUPD='".$_SESSION['username']."', UNIT_ID='$unitid' where GUID='".$iduserdetail[$x]."'");
       mysql_query("update quota set DTMUPD=now(), USRUPD='".$_SESSION['username']."', ".$qw."=".$qw."-'1' where TOPIC_ID='".$topik[$x]."'");
     }
   }
   
-  if(isset($_POST['intern'])){
+  if(isset($_POST['rijek'])){
     $rijek = $_POST['rijek'];
     for($y=0; $y<count($rijek); $y++){
       mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='REJECTED', UNIT_ID='$unitid' where GUID='".$rijek[$y]."'");
