@@ -9,7 +9,9 @@ if(!isset($_GET['act'])){
 			  <thead>
 			    <tr>
 			      <th class="col-md-1 text-center">No</th>
-			      <th>Program Name</th>
+			      <th>Institute Name</th>
+			      <th class="col-md-2 text-center">Nickname</th>
+			      <th class="col-md-2 text-center">Type</th>
 			      <th class="col-md-2 text-center">#</th>
 			    </tr>
 			  </thead>
@@ -21,6 +23,8 @@ if(!isset($_GET['act'])){
 			    ?>
 			    <tr>
 			      <td class="text-center"><?=$i;?></td>
+			      <td><?php echo $dc['INSTITUTE_NAME'];?></td>
+			      <td><?php echo $dc['INSTITUTE_NAME'];?></td>
 			      <td><?php echo $dc['INSTITUTE_NAME'];?></td>
 			      <td class="text-center">
 			      	<a type="button" class="btn btn-xs btn-primary" href="?p=institute&act=edit&guid=<?php echo $dc['GUID'];?>">Edit</a>
