@@ -153,7 +153,12 @@ if(!isset($_GET['act'])){
 			$end = mysql_real_escape_string($_POST['end']);
 			$q = mysql_query("update unit set UNIT_CODE='$code', UNIT_NAME='$nama', UNIT_DESC='$desc', DTMUPD=now(), USRUPD='$user' where GUID='$guid'");
 			if($q){
-				mysql_query("update unit_leader set UNIT_ID='$guid', USER_DETAIL_ID='$leader', START='$start', END='$end', DTMUPD=now(), USRUPD='$user' where GUID='$unitleader'");
+				$c = mysql_num_rows(mysql_query("select * from unit_leader where UNIT_ID='$guid'"));
+				if($c<1){
+					mysql_query("insert into unit_leader(GUID,UNIT_ID,USER_DETAIL_ID,START,END,DTMCRT,USRCRT) values(uuid(),'$guid','$leader','$start','$end',now(),'$user')");
+				}else{
+					mysql_query("update unit_leader set UNIT_ID='$guid', USER_DETAIL_ID='$leader', START='$start', END='$end', DTMUPD=now(), USRUPD='$user' where GUID='$unitleader'");
+				}
 				mysql_query("update user_detail set UNIT_ID='$guid' where GUID='$leader'");
 				eksyen('','?p=unit');
 			}else{
