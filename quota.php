@@ -1,4 +1,4 @@
-<br><h1>Quota per Unit</h1>
+<h1>Quota per Unit</h1>
 <?php
 if(isset($_POST['quota'])){
 	$qcek = mysql_query("select * from quota_per_unit");

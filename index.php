@@ -212,7 +212,7 @@ if(isset($_SESSION['username'])){
                       <p align="center">
                         <input type="password" name="password" class="form-control" id="password" placeholder="Password" align="middle" style="text-align:center" required/>
                       </p>
-                      <p align="center"><a href="#" class="style1">Forgot my password</a><br>
+                      <p align="center"><a href="forget.php" class="style1">Forgot my password</a><br>
                         <label for="checkbox"></label>
                       </p>
                     <p align="center"><button type="submit" class="button button-sp">Sign in</button></p></td>

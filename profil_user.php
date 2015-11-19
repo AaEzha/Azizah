@@ -58,7 +58,7 @@ if(isset($_POST['namadepan'])){
 
 	$q = mysql_query("update user_detail set FIRSTNAME='$namadepan', LASTNAME='$namabelakang', ID_CARD='$noid', NIM_NIS='$nims', EMAIL='$email', PLACE_OF_BIRTH='$tempatlahir', DATE_OF_BIRTH='$tanggallahir', GENDER='$jk', USER_ADDRESS='$alamat', HOBBY='$hobi', PHONE1='$tel1', PHONE2='$tel2', DTMUPD=now(), USRUPD='$userr' where USER_ID='$iduser'");
 	if($q){
-		eksyen('Registration saved!','?p=profil_user');
+		eksyen('Profil saved!','?p=profil_user');
 	}else{
 		eksyen('Error!','?p=profil_user');
 	}

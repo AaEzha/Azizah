@@ -1,4 +1,4 @@
-<br><h1>Select Topic</h1>
+<h1>Select Topic</h1>
 <?php
 $unit = ambildata($_SESSION['iddetail'],'user_detail','UNIT_ID');
 

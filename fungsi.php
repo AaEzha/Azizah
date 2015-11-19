@@ -1,5 +1,8 @@
 <?php
 date_default_timezone_set("Asia/Jakarta");
+
+define("URL","http://www.google.com"); // tanpa garis miring dibelakang
+
 function sesi($grup){
 	if($_SESSION['grup'] != $grup){
 		echo '<script>window.location.assign("inside.php");</script>';

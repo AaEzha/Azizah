@@ -107,45 +107,10 @@ include("db_connection.php");
             <script src="js/respond.min.js"></script>
         <![endif]-->
         <script type="text/javascript" src="js/app.js"></script>
-        <script>
-        $(function() {
-          var availableTags = [
-          <?php
-          $qi = mysql_query("select * from institute order by INSTITUTE_NAME");
-          while($di = mysql_fetch_array($qi)){
-          ?>
-            "<?=$di['INSTITUTE_NAME'];?>",
-          <?php } ?>
-          ];
-          $("#ins").autocomplete({
-            source: availableTags
-          });
-
-          $( "#tgl,#tgls,#tglf" ).datepicker({
-            dateFormat: "yy-mm-dd",
-            changeYear: true,
-            changeMonth: true
-          });
-
-          $( "#mulai" ).datepicker({
-            dateFormat: "yy-mm-dd",
-            minDate:"+1m"
-          });
-
-          $( "#selesai" ).datepicker({
-            dateFormat: "yy-mm-dd",
-            minDate:"+1m +7d"
-          });
-        });
-        </script>          
 </head>
     
 <body onLoad="MM_preloadImages('images/upl-photo.png','images/upl-doc.png','images/internship_.png','images/pengajuan_.png')">
 
-<?php
-$qud = mysql_query("select firstname,lastname,email from user_detail where guid='$_SESSION[iddetail]'");
-$dud = mysql_fetch_array($qud);
-?>
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -159,74 +124,75 @@ $dud = mysql_fetch_array($qud);
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right" id="top-navigation">
-        <?php
-        if(!isset($_GET['p'])){
-        ?>
-          <li><a href="inside.php">Home</a></li>
-          <?php if($_SESSION['grup']=='ADMIN' or $_SESSION['grup']=='LCU'){ ?>
-          <li><a href="#mastersetting">Master Setting</a></li>
-          <li><a href="#internship">Internship</a></li>
-          <?php }else{ ?>
-          <li><a href="#mastersetting">Internship</a></li>
-          <li><a href="#internship">History</a></li>
-          <?php } ?>
-          <li><a href="#comment">Comment</a></li>
-          <li><a href="proses_logout.php">Sign Out</a></li>
-        <?php
-        }else{
-        ?>
-          <li><a href="inside.php">Home</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master Setting <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-            <?php if($_SESSION['grup']=='ADMIN'){ ?>
-              <li> <a href="?p=user">User</a></li>
-              <li> <a href="?p=unit">Unit</a></li>
-              <li> <a href="?p=program">Program</a></li>
-              <li> <a href="?p=internprogram">Internship Program</a></li>
-              <li> <a href="?p=topic">Topic</a></li>
-              <li> <a href="?p=quota">Quota</a></li>
-              <li> <a href="?p=institute">Institute</a></li>
-              <li> <a href="?p=major">Major</a></li>
-              <li> <a href="?p=education-level">Education Level</a></li>
-            <?php } ?>
-            <?php if($_SESSION['grup']=='LCU'){ ?>
-              <li> <a href="?p=topic">Topic</a></li>
-              <li> <a href="?p=assesment">Assessment</a></li>
-              <li> <a href="?p=message">Message</a></li>
-              <li> <a href="?p=institute">Institute</a></li>
-              <li> <a href="?p=major">Major</a></li>
-              <li> <a href="?p=letter">Letter</a></li>
-            <?php } ?>
-            </ul>
-          </li>
-          <li><a href="inside.php#internship">Internship</a></li>
-          <li><a href="inside.php#comment">Comment</a></li>
-          <li><a href="proses_logout.php">Sign Out</a></li>
-        <?php
-        }
-        ?>
+        <li><a href="index.php">Home</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
 
-<?php
-if(isset($_GET['p'])){
-  $p = mysql_real_escape_string($_GET['p']);
-?>
 <div class="section aaezha" id="mastersetting">
 <div class="container">
-<p>&nbsp;</p>
+
 <?php
-  include $p.'.php';
-?>
-</div></div>
-<?php
-}else{
-  include 'inside_default.php';
+if(isset($_POST['email']))
+{
+	$email = mysql_real_escape_string($_POST['email']);
+	$id = mysql_real_escape_string($_POST['code']);
+	$pass = mysql_real_escape_string($_POST['pass']);
+	$md5pass = md5($pass);
+
+	// cek
+	$q = mysql_query("select USER_ID,FIRSTNAME,LASTNAME from user_detail where EMAIL='$email' and ID_CARD='$id' or EMAIL='$email' and NIM_NIS='$id' or EMAIL='$email' and PHONE1='$id' or EMAIL='$email' and PHONE2='$id'");
+	$qj = mysql_num_rows($q);
+	$qd = mysql_fetch_array($q);
+	if($qj>=1)
+	{
+		// ubah passwordnya
+		$userid = $qd['USER_ID'];
+		mysql_query("update user set password='$md5pass' where GUID='$userid'");
+		// info untuk email
+		$_SESSION['emailnya'] = $email;
+		$_SESSION['namanya'] = $qd['FIRSTNAME'] ." ".$qd['LASTNAME'];
+		$_SESSION['passwordnya'] = $pass;
+		//include 'email/forget.php';
+	}
 }
 ?>
+
+	<h1>Forget your password</h1>
+	<form class="form-horizontal" action="" method="post">
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">Your Email</label>
+	    <div class="col-sm-4">
+	      <input type="text" class="form-control" name="email" placeholder="e.g: youremail@email.com" maxlength="100" required>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">Your ID/NIS/Phone Number</label>
+	    <div class="col-sm-4">
+	      <input type="text" class="form-control" name="code" placeholder="Your ID/NIS/Phone Number" maxlength="32" required>
+	      <p class="help-text">Pick one of those choices.</p>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">Your New Password</label>
+	    <div class="col-sm-4">
+	      <input type="text" class="form-control" name="pass" placeholder="Your New Password" maxlength="20" required>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-success">Save</button>
+	      <button type="reset" class="btn btn-warning">Reset</button>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-success">Save</button>
+	      <button type="reset" class="btn btn-warning">Reset</button>
+	    </div>
+	  </div>
+	</form>
 
 
 <!-- Footer section start -->

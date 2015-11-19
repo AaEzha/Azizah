@@ -40,7 +40,7 @@ if(!isset($_POST['noid'])){
     $tmp_name  = $_FILES['cv']['tmp_name']; //nama local temp file di server
     $file_size = $_FILES['cv']['size']; //ukuran file (dalam bytes)
     $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
-    $file_type = $_FILES['cv']['type']; //tipe filenya (langsung detect MIMEnya)
+    $file_type2 = $_FILES['cv']['type']; //tipe filenya (langsung detect MIMEnya)
     $cv = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
     $cv = mysql_real_escape_string($cv) or die("Tidak dapat membaca source file"); // parse image ke string
     fclose($fp); // tutup file
@@ -55,7 +55,7 @@ if(!isset($_POST['noid'])){
     $_SESSION['reg_email'] = $email;
 
     // insert into user_detail //
-    mysql_query("insert into user_detail(GUID,USER_ID,FIRSTNAME,LASTNAME,ID_CARD,NIM_NIS,EMAIL,PLACE_OF_BIRTH,DATE_OF_BIRTH,GENDER,USER_ADDRESS,HOBBY,PHONE1,PHONE2,CONCERN,ABOUT_ME,CV,PHOTO,DTMCRT,USRCRT) values(uuid(),'$iduser','$namadepan','$namabelakang','$noid','$nims','$email','$tempatlahir','$tanggallahir','$jk','$alamat','$hobi','$tel1','$tel2','$minat','$kemampuan','$cv','$photo',now(),'$userid')");
+    mysql_query("insert into user_detail(GUID,USER_ID,FIRSTNAME,LASTNAME,ID_CARD,NIM_NIS,EMAIL,PLACE_OF_BIRTH,DATE_OF_BIRTH,GENDER,USER_ADDRESS,HOBBY,PHONE1,PHONE2,CONCERN,ABOUT_ME,CV,MIME_CV,PHOTO,MIME_PHOTO,DTMCRT,USRCRT) values(uuid(),'$iduser','$namadepan','$namabelakang','$noid','$nims','$email','$tempatlahir','$tanggallahir','$jk','$alamat','$hobi','$tel1','$tel2','$minat','$kemampuan','$cv','$file_type','$photo','$file_type2',now(),'$userid')");
     $qu = mysql_query("select GUID from user_detail where USER_ID='$iduser'");
     $du = mysql_fetch_array($qu);
     $iduserdetail = $du['GUID'];
@@ -94,6 +94,12 @@ if(!isset($_POST['noid'])){
 
     // insert into user_education
     mysql_query("insert into user_education(GUID,USER_DETAIL_ID,EDUCATION_LEVEL_ID,INSTITUTE_ID,MAJOR_ID,DTMCRT,USRCRT) values(uuid(),'$iduserdetail','$jenjang','$idins','$idjur',now(),'$userid')");
+
+    // untuk kirim email
+    $_SESSION['namanya']    = $namadepan." ".$namabelakang;
+    $_SESSION['emailnya']   = $email;
+    $_SESSION['idnya']      = $iduser;
+    include 'email/registration.php';
 
     // OK
     eksyen('Registered!','index.php');
