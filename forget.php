@@ -154,7 +154,10 @@ if(isset($_POST['email']))
 		$_SESSION['emailnya'] = $email;
 		$_SESSION['namanya'] = $qd['FIRSTNAME'] ." ".$qd['LASTNAME'];
 		$_SESSION['passwordnya'] = $pass;
-		//include 'email/forget.php';
+		include 'email/forget.php';
+		eksyen('Check your email!','index.php');
+	}else{
+		eksyen('Wrong account!','index.php');
 	}
 }
 ?>

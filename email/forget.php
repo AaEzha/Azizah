@@ -23,13 +23,16 @@ $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name*/
 
 $mail->isHTML(true);                                  // Set email format to HTML
 $mail->Subject = 'Retrieving GMF Account';
-$mail->Body    = '<p>This is your new password : '.$_SESSION['passwordnya'].'.<p>
+$mail->Body    = '<p>This is your new password : '.$_SESSION['passwordnya'].'<p>
 					<p>Enjoy your account.</p>';
-$mail->AltBody = 'This is your new password : '.$_SESSION['passwordnya'].'.';
+$mail->AltBody = 'This is your new password : '.$_SESSION['passwordnya'].'';
 
 if(!$mail->send()) {
     echo 'Message could not be sent.';
     echo 'Mailer Error: ' . $mail->ErrorInfo;
 } else {
     echo 'Message has been sent';
+    unset($_SESSION['namanya']);
+    unset($_SESSION['emailnya']);
+    unset($_SESSION['passwordnya']);
 }
