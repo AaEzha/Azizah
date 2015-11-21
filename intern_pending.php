@@ -39,6 +39,11 @@ if(isset($_POST['iduserdetail'])){
       mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='APPROVED', UNIT_ID='$unitid' where GUID='".$intern[$x]."'");
       mysql_query("update user_detail set DTMUPD=now(), USRUPD='".$_SESSION['username']."', UNIT_ID='$unitid' where GUID='".$iduserdetail[$x]."'");
       mysql_query("update quota set DTMUPD=now(), USRUPD='".$_SESSION['username']."', ".$qw."=".$qw."-'1' where TOPIC_ID='".$topik[$x]."'");
+
+      // untuk email
+      $_SESSION['namanya'] = data_user_detail($iduserdetail[$x],"FIRSTNAME") ." ". data_user_detail($iduserdetail[$x],"LASTNAME");
+      $_SESSION['emailnya'] = data_user_detail($iduserdetail[$x],"EMAIL");
+      include 'email/clearance.php';
     }
   }
   
@@ -46,6 +51,11 @@ if(isset($_POST['iduserdetail'])){
     $rijek = $_POST['rijek'];
     for($y=0; $y<count($rijek); $y++){
       mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='REJECTED', UNIT_ID='$unitid' where GUID='".$rijek[$y]."'");
+
+      // untuk email
+      $_SESSION['namanya'] = data_user_detail($iduserdetail[$y],"FIRSTNAME") ." ". data_user_detail($iduserdetail[$y],"LASTNAME");
+      $_SESSION['emailnya'] = data_user_detail($iduserdetail[$y],"EMAIL");
+      include 'email/rejection.php';
     }
   }
 /*
