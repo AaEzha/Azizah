@@ -3,13 +3,13 @@ require 'bin/PHPMailerAutoload.php';
 
 $mail = new PHPMailer;
 
-//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+//$mail->SMTPDebug = 3;			// Enable verbose debug output
 
-$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->isSMTP();                                  // Set mailer to use SMTP
 $mail->Host = 'ssl://smtp.googlemail.com';  // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
 $mail->Username = 'donotreply.gmf.aeroasia@gmail.com';                 // SMTP username
-$mail->Password = 'tidakbolehkosong';                           // SMTP password
+$mail->Password = 'tidakbolehkosong';                         // SMTP password
 $mail->Port = 465;                                    // TCP port to connect to
 
 $mail->setFrom('donotreply.gmf.aeroasia@gmail.com', 'GMF AeroAsia');

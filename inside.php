@@ -217,7 +217,6 @@ if(isset($_GET['p'])){
 ?>
 <div class="section aaezha" id="mastersetting">
 <div class="container">
-<p>&nbsp;</p>
 <?php
   include $p.'.php';
 ?>
