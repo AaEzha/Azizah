@@ -136,6 +136,108 @@ function time_ago( $date )
     }
 
     return "$difference $periods[$j] {$tense}";
+}
 
+function findweek($tgl,$op){
+	if($tgl>=1 and $tgl<=7){
+		$a = "WEEK1";
+		$b = "1";
+		$c = "WEEK2";
+		$d = "";
+	}elseif($tgl>=8 and $tgl<=14){
+		$a = "WEEK2";
+		$b = "2";
+		$c = "WEEK3";
+		$d = "WEEK1";
+	}elseif($tgl>=15 and $tgl<=21){
+		$a = "WEEK3";
+		$b = "3";
+		$c = "WEEK4";
+		$d = "WEEK2";
+	}elseif($tgl>=22 and $tgl<=28){
+		$a = "WEEK4";
+		$b = "4";
+		if(date('m')==02){
+			if(checkdate(date('m'), $tgl+1, date('Y'))){
+				$c = "WEEK5";
+			}else{
+				$c = "WEEK1";
+			}
+		}else{
+			$c = "WEEK5";
+		}
+		$d = "WEEK3";
+	}elseif($tgl>=29 and $tgl<=31){
+		$a = "WEEK5";
+		$b = "5";
+		$c = "WEEK1";
+		$d = "WEEK4";
+	}
+	switch ($op) {
+		case 'long':
+			return $a;
+			break;
+		case 'short':
+			return $b;
+			break;
+		case 'sesudah':
+			return $c;
+			break;
+		case 'sebelum':
+			return $d;
+			break;
+	}
+}
+
+function cekquota($idtopik){
+	$tgl = date('d');
+	$bln = date('m');
+	$thn = date('Y');
+
+	$qck = mysql_query("select * from quota where TOPIC_ID='$idtopik' and YEAR='$thn'");
+	$jck = mysql_num_rows($qck);
+	// jika berganti tahun
+	if($jck<1){
+		$qta = mysql_query("select WEEK5 from quota where TOPIC_ID='$idtopik' and YEAR='$thn' and MONTH='12'");
+		$dta = mysql_fetch_array($qta);
+		$dweek5 = $dta['WEEK5'];
+		mysql_query("insert into quota(GUID,TOPIC_ID,YEAR,MONTH,WEEK1,DTMCRT,USRCRT) values(uuid(),'$idtopik','$thn'+1,'01','$dweek5',now(),'$_SESSION[username]')");
+		echo "<script>alert('Quota update tahunan')</script>";
+	}else{
+		$qcb = mysql_query("select * from quota where TOPIC_ID='$idtopik' and YEAR='$thn' and MONTH='$bln'");
+		$jcb = mysql_num_rows($qcb);
+		// jika berganti bulan
+		if($jcb<1){
+			$qba = mysql_query("select WEEK5 from quota where TOPIC_ID='$idtopik' and YEAR='$thn' and MONTH='$bln'");
+			$dba = mysql_fetch_array($qba);
+			$dweek5 = $dba['WEEK5'];
+			mysql_query("insert into quota(GUID,TOPIC_ID,YEAR,MONTH,WEEK1,DTMCRT,USRCRT) values(uuid(),'$idtopik','$thn','$bln'+1,'$dweek5',now(),'$_SESSION[username]')");
+			echo "<script>alert('Quota update bulanan')</script>";
+		}else{
+			$minggu = findweek($tgl,"long");
+			$wik = findweek($tgl,"sebelum"); // minggu sebelumnya
+			$qcw = mysql_query("select $minggu as minggunya, $wik as minggunya2 from quota where TOPIC_ID='$idtopik' and YEAR='$thn' and MONTH='$bln'");
+			$dcw = mysql_fetch_array($qcw);
+			// jika berganti minggu
+			if($dcw['minggunya'] == NULL){
+				$datanya = $dcw['minggunya2'];
+				mysql_query("update quota set $minggu='$datanya' where TOPIC_ID='$idtopik' and YEAR='$thn' and MONTH='$bln'");
+				echo "<script>alert('Quota update mingguan')</script>";
+			}
+			
+		}
+	}
+}
+
+function cekquotatopik(){
+	$q = mysql_query("
+					select a.TOPIC_ID as topiknya from quota a
+					join internship_registration b on b.MASTER_TOPIC_ID=a.TOPIC_ID
+					where b.STATUS='IN PROGRESS'
+					group by a.TOPIC_ID
+					");
+	while($d = mysql_fetch_array($q)){
+		cekquota($d['topiknya']);
+	}
 }
 ?>

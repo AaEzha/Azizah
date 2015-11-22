@@ -32,7 +32,7 @@ if(isset($_GET['a']) and isset($_GET['x']))
 }
 ?>
 
-<h1>On-Going Intern</h1>
+<h1>On-Going Internship</h1>
 <?=tabel();?>
 <table class="table table-condensed" id="tbl">
   <thead>
@@ -91,7 +91,7 @@ T
 -->
 
 <hr>
-<h1>Rejected Intern</h1>
+<h1>Internship History</h1>
 <?=tabel();?>
 <table class="table table-condensed" id="tbl2">
   <thead>
@@ -101,6 +101,7 @@ T
       <th class="col-md-2 text-center">Program</th>
       <th class="text-center">Topik/Referensi</th>
       <th class="col-md-2 text-center">Periode</th>
+      <th class="col-md-1 text-center">Status</th>
       <th class="col-md-2 text-center">Action</th>
     </tr>
   </thead>
@@ -121,6 +122,7 @@ T
       <td class="text-center"><?=ambildata($d['PROGRAM_ID'],'internship_program','PROGRAM');?></td>
       <td class="text-center"><?=ambildata($d['MASTER_TOPIC_ID'],'master_topic','TOPIC_NAME');?></td>
       <td class="text-center"><?=$d['START_DATE'];?> / <?=$d['END_DATE'];?></td>
+      <td class="text-center"><?=$d['STATUS'];?></td>
       <td class="text-center">
         <div class="btn-group" role="group" aria-label="...">
           <a href="?p=intern_detail&i=<?=$d['GUID'];?>" class="btn btn-info btn-sm" title="Internship Detail">Detail</a>

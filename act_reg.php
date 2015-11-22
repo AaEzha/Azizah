@@ -88,6 +88,7 @@ if(!isset($_POST['noid'])){
         $idjur = $di['GUID'];
     }else{
         mysql_query("insert into major(GUID,MAJOR_NAME,DTMCRT,USRCRT) values(uuid(),'$jurusan',now(),'$userid')");
+        $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME='$jurusan'");
         $di = mysql_fetch_array($qi);
         $idjur = $di['GUID'];
     }

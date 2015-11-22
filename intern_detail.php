@@ -6,6 +6,8 @@ $q = mysql_query("select * from internship_registration ir
 				  where ir.GUID='$id'");
 $d = mysql_fetch_array($q);
 
+$statusnya = $d['STATUS'];
+
 
 $idintern = ambildata($id,'internship_registration','USER_DETAIL_ID');
 $idtopic = ambildata($id,'internship_registration','MASTER_TOPIC_ID');
@@ -127,7 +129,7 @@ elseif($_SESSION['grup']=='LCU')
 			<td width="77%"><span style="margin-left:60px;"><?=ambildata($idtopic,'master_topic','TOPIC_NAME');?></span></td>
 		</tr>
 		<tr bgcolor="#666" height="43">
-			<td width="28%"><span style="margin-left:40px;">Surat Pengantar</span></td>
+			<td width="28%"><span style="margin-left:40px;">Cover Letter</span></td>
 			<td width="77%"><span style="margin-left:60px;"><a href="blob.php?i=<?=$id;?>&mime=MIME_COVER_LETTER&file=COVER_LETTER" target="_blank" class="btn btn-primary btn-xs">Download</a></span></td>
 		</tr>
 		<tr bgcolor="#333" height="43">
@@ -138,6 +140,10 @@ elseif($_SESSION['grup']=='LCU')
 			<td width="28%"><span style="margin-left:40px;">CV</span></td>
 			<td width="77%"><span style="margin-left:60px;"><a href="blob.php?i=<?=$id;?>&mime=MIME_CV&file=CV" target="_blank" class="btn btn-primary btn-xs">Download</a></span></td>
 		</tr>
+        <tr bgcolor="#333" height="43">
+            <td width="28%"><span style="margin-left:40px;">Status</span></td>
+            <td width="77%"><span style="margin-left:60px;"><?=$d['STATUS'];?></span></td>
+        </tr>
 	</table>
 </div>
 <div class="col-md-4">
@@ -212,9 +218,9 @@ elseif($_SESSION['grup']=='LCU')
         	<input type="hidden" name="internid" id="inputUserid" class="form-control" value="<?=$_GET['i'];?>">
         	<input type="hidden" name="userid" id="inputUserid" class="form-control" value="<?=$_SESSION['iddetail'];?>">
             <div class="input-group">
-                <input id="btn-input" type="text" name="pesan" class="form-control input-sm" placeholder="Type your message here..." />
+                <input id="btn-input" type="text" name="pesan" class="form-control input-sm" placeholder="Type your message here..." <?php echo ($statusnya=="REJECTED")?"disabled":"";?> />
                 <span class="input-group-btn">
-                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                    <button class="btn btn-warning btn-sm" id="btn-chat" <?php echo ($statusnya=="REJECTED")?"disabled":"";?>>
                         Send</button>
                 </span>
             </div>

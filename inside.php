@@ -1,7 +1,6 @@
 <?php
 session_start();
 include("db_connection.php");
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -284,6 +283,10 @@ if(isset($_GET['p'])){
   <?php while($dnotif = mysql_fetch_array($qnotif)){ ?>
 	<a href="?p=intern_detail&i=<?=$dnotif['id'];?>" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-envelope"></span></a>
   <?php } ?>
-</div>        
+</div>
+<?php
+// update quota
+cekquotatopik();
+?>  
 </body>
 </html>
