@@ -285,9 +285,9 @@ function cekgrade($n){
 function totgrade($n)
 {
 	$tot = $n/14;
-	if($tot<=100 and $tot>=81){
+	if($tot<=100 and $tot>=91){
 		$g = "A";
-	}elseif($tot<=80 and $tot>=61){
+	}elseif($tot<=90 and $tot>=61){
 		$g = "B";
 	}elseif($tot<=60 and $tot>=41){
 		$g = "C";

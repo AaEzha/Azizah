@@ -50,7 +50,7 @@ if(isset($_GET['a']) and isset($_GET['x']))
   $i = 1;
   $id = $_SESSION['iddetail'];
   $unitid = ambildata($id,'user_detail','UNIT_ID');
-  $q = mysql_query("select * from internship_registration where STATUS in('APPROVED','IN PROGRESS') and UNIT_ID='$unitid'");
+  $q = mysql_query("select * from internship_registration where STATUS in('APPROVED','IN PROGRESS','FINISHED') and UNIT_ID='$unitid'");
   while($d = mysql_fetch_array($q)){ 
   ?>
     <tr>

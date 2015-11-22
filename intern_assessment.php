@@ -77,12 +77,19 @@ if(isset($_POST['aspek']))
 		mysql_query("insert into assessment(GUID,INTERN_ID,ASSESSMENT_ASPECT_ID,VALUE,GRADE,DTMCRT,USRCRT) values(uuid(),'$id','$aspek[$x]','$nilai[$x]','".cekgrade($nilai[$x])."',now(),'$_SESSION[username]')");
 	}
 	mysql_query("update internship_registration set STATUS='FINISHED' where GUID='$id'");
+
+	// kirim email
+	$_SESSION['namanya'] = $_POST['namanya'];
+	$_SESSION['emailnya'] = $_POST['emailnya'];
+	include 'email/assessment.php';
 	eksyen('Saved!','?p=intern_assessment&i='.$id.'');
 }
 ?>
 
 <div class="row">
 <form action="" method="post">
+	<input type="hidden" name="namanya" id="inputNamanya" class="form-control" value="<?=ambildata($idintern,'user_detail','FIRSTNAME');?> <?=ambildata($idintern,'user_detail','LASTNAME');?>">
+	<input type="hidden" name="emailnya" id="inputEmailnya" class="form-control" value="<?=ambildata($idintern,'user_detail','EMAIL');?>">
 	<div class="col-md-offset-2 col-md-8">
 		<table class="table table-bordered">
 			<thead>
