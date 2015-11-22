@@ -165,7 +165,7 @@ $dud = mysql_fetch_array($qud);
         <?php
         if(!isset($_GET['p'])){
         ?>
-          <li><a href="inside.php">Home</a></li>
+          <li><a href="home.php">Home</a></li>
           <?php if($_SESSION['grup']=='ADMIN' or $_SESSION['grup']=='LCU'){ ?>
           <li><a href="#mastersetting">Master Setting</a></li>
           <li><a href="#internship">Internship</a></li>
@@ -178,7 +178,7 @@ $dud = mysql_fetch_array($qud);
         <?php
         }else{
         ?>
-          <li><a href="inside.php">Home</a></li>
+          <li><a href="home.php">Home</a></li>
             <?php if($_SESSION['grup']=='ADMIN'){ ?>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master Setting <span class="caret"></span></a>
@@ -208,8 +208,8 @@ $dud = mysql_fetch_array($qud);
             </ul>
           </li>
             <?php } ?>
-          <li><a href="inside.php#internship">Internship</a></li>
-          <li><a href="inside.php#comment">Comment</a></li>
+          <li><a href="home.php#internship">Internship</a></li>
+          <li><a href="home.php#comment">Comment</a></li>
           <li><a href="proses_logout.php">Sign Out</a></li>
         <?php
         }

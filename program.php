@@ -34,7 +34,7 @@ if(!isset($_GET['act'])){
 	</div>
 <?php
 }else{
-	echo "<script>tinymce.init({selector:'#detail,#need'});</script>";
+	echo "<script type='text/javascript' src='js/tinymce/tinymce.min.js'></script><script>tinymce.init({selector:'#detail,#need'});</script>";
 	$act = $_GET['act'];
 	switch ($act) {
 		case 'add':

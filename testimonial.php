@@ -1,11 +1,10 @@
 <h1>Testimonial</h1>
-<script>tinymce.init({selector:'textarea'});</script>
-<div class="col-md-6">
+<script type='text/javascript' src='js/tinymce/tinymce.min.js'></script><script>tinymce.init({selector:'#inputTesti'});</script>
+<div class="col-md-8">
 	<form action="" method="POST" role="form">
 
 		<div class="form-group">
-			<label for="inputTesti">Give your best testimonial</label>
-			<textarea name="testi" id="inputTesti" class="form-control" rows="3" required="required"></textarea>
+			<textarea name="testi" id="inputTesti" class="form-control" rows="6" required="required"></textarea>
 		</div>	
 
 		<button type="submit" class="btn btn-primary">Submit</button>

@@ -44,7 +44,7 @@
 		mysql_query("update user set ISLOGIN='1', LASTLOGIN=now() where username='$username'");
 
 		// teks
-		echo '<script>window.location.assign("inside.php");</script>';
+		echo '<script>window.location.assign("home.php");</script>';
 	}else{
 		//teks
 		echo '<script>alert("User Not Found");</script>';
