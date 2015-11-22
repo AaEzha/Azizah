@@ -22,6 +22,9 @@ if(isset($_GET['a']) and isset($_GET['x']))
     elseif($aksi == md5("finish"))
     {
       mysql_query("update internship_registration set STATUS='DONE' where GUID='$idinter'");
+      $_SESSION['namanya'] = data_user_detail($_SESSION['iddetail'],"FIRSTNAME");
+      $_SESSION['emailnya'] = data_user_detail($_SESSION['iddetail'],"EMAIL");
+      include 'email/finish.php';
       eksyen('It is finished!','?p=intern');
     }
     else
