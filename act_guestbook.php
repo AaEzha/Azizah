@@ -6,7 +6,7 @@ if(!isset($_POST['yourname'])){
 	$youremail = mysql_real_escape_string($_POST['youremail']);
 	$yourcomment = mysql_real_escape_string($_POST['yourcomment']);
 
-	$q = mysql_query("insert into guestbook(GUID,FIRSTNAME,EMAIL,COMMENT) values(uuid(),'$yourname','$youremail','$yourcomment')");
+	$q = mysql_query("insert into guestbook(GUID,FIRSTNAME,EMAIL,COMMENT,DTMCRT) values(uuid(),'$yourname','$youremail','$yourcomment',now())");
 	if ($q) {
 		eksyen('Success!','index.php');
 	} else {

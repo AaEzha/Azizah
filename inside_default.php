@@ -447,66 +447,36 @@ if($_b['LASTNAME']==''){
   <div class="section third-section" style="background:#000">
     <div class="container">
       <div class="text-center">
-        <h1 style="color:#05B1EB">Message</h1>
+        <h1 style="color:#05B1EB">Guestbook</h1>
       </div>
       <div class="col-md-12">
-      <?php if($_SESSION['grup']=='USER'){ ?>
-        <?php
-        $qr = mysql_query("select STATUS from internship_registration where USER_DETAIL_ID='".$_SESSION['iddetail']."' and STATUS!='REJECTED' and STATUS!='PENDING'");
-        $qrc = mysql_num_rows($qr);
-        if($qrc>=1){ ?>
-        <table class="table">
-          <tbody>
-            <tr>
-              <td class="text-right"><a href="?p=message&act=addnew" class="btn btn-primary btn-sm">Kirim Tiket Baru</a>
-            </tr>
-          </tbody>
-        </table>
-      <?php 
-        }
-      } 
-      ?>
         <table class="table" id="tbl">
           <thead>
             <tr>
               <th class="col-md-1 text-center">No</th>
-              <th class="col-md-2 text-center">Nama Intern</th>
-              <th class="text-center">Judul</th>
-              <th class="col-md-2 text-center">Unit</th>
-              <th class="col-md-2 text-center">Waktu</th>
+              <th class="col-md-2">Nama</th>
+              <th class="col-md-2">Email</th>
+              <th>Pesan</th>
+              <th class="col-md-2 text-center">Tanggal</th>
               <th class="col-md-1 text-center">Status</th>
               <th class="col-md-1 text-center">Aksi</th>
             </tr>
           </thead>
           <tbody>
             <?php
-            $i=1;
-            if($_SESSION['grup']!='USER'){
-              // unit id
-              $unitid = ambildata($_SESSION['iddetail'],'user_detail','UNIT_ID');
-              $qc = mysql_query("select * from message where UNIT_ID='$unitid' group by MESSAGE_ID order by DTMCRT desc");
-            }else{
-              $qc = mysql_query("select * from message where SENDER_ID='".$_SESSION['iddetail']."' group by MESSAGE_ID order by DTMCRT desc");
-            }
-            while($d = mysql_fetch_array($qc)){
-              $internid = $d['INTERN_ID'];
-              $id_si_intern = ambildata($internid,'internship_registration','USER_DETAIL_ID');
-              // last time
-              $q2 = mysql_query("select * from message where MESSAGE_ID='".$d['MESSAGE_ID']."' order by DTMCRT desc limit 1");
-              $d2 = mysql_fetch_array($q2);
-
-              // last status
-            ?>
+            $qm = mysql_query("select * from guestbook order by DTMCRT desc");
+            $i = 1;
+            while($dm = mysql_fetch_array($qm)){ ?>
             <tr>
-              <td class="text-center"><?=$i;?></td>
-              <td class="text-center"><?=ambildata($id_si_intern,'user_detail','FIRSTNAME');?> <?=ambildata($id_si_intern,'user_detail','LASTNAME');?></td>
-              <td class="text-center"><?=$d['TITLE'];?></td>
-              <td class="text-center"><?=ambildata($d['UNIT_ID'],'unit','UNIT_NAME');?></td>
-              <td class="text-center"><?=$d2['DTMCRT'];?></td>
-              <td class="text-center"><?=$d2['STATUS'];?></td>
-              <td class="text-center"><a href="?p=message&act=reply&i=<?=$d['MESSAGE_ID'];?>" class="btn btn-info btn-xs">balas</a></td>
+              <td class="text-center"><?=$i++;?></td>
+              <td><?=$dm['FIRSTNAME'];?></td>
+              <td><?=$dm['EMAIL'];?></td>
+              <td><?=$dm['COMMENT'];?></td>
+              <td class="text-center"><?=$dm['DTMCRT'];?></td>
+              <td class="text-center"><?=($dm['REPLY']==1) ? "Replied":"Unreplied";?></td>
+              <td class="text-center"><a href="?p=gbook&i=<?=$dm['GUID'];?>" class="btn btn-info btn-xs">balas</a></td>
             </tr>
-            <?php $i++; } ?>
+            <?php } ?>
           </tbody>
         </table>
       </div>

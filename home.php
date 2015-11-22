@@ -173,7 +173,7 @@ $dud = mysql_fetch_array($qud);
           <li><a href="#mastersetting">Internship</a></li>
           <li><a href="#internship">History</a></li>
           <?php } ?>
-          <li><a href="#comment">Comment</a></li>
+          <li><a href="#comment">Guestbook</a></li>
           <li><a href="proses_logout.php">Sign Out</a></li>
         <?php
         }else{
@@ -194,6 +194,8 @@ $dud = mysql_fetch_array($qud);
               <li> <a href="?p=education-level">Education Level</a></li>
             </ul>
           </li>
+          <li><a href="home.php#internship">Internship</a></li>
+          <li><a href="home.php#comment">Guestbook</a></li>
             <?php } ?>
             <?php if($_SESSION['grup']=='LCU'){ ?>
           <li class="dropdown">
@@ -207,9 +209,9 @@ $dud = mysql_fetch_array($qud);
               <li> <a href="?p=letter">Letter</a></li>
             </ul>
           </li>
-            <?php } ?>
           <li><a href="home.php#internship">Internship</a></li>
-          <li><a href="home.php#comment">Comment</a></li>
+          <li><a href="home.php#comment">Guestbook</a></li>
+            <?php } ?>
           <li><a href="proses_logout.php">Sign Out</a></li>
         <?php
         }
@@ -271,6 +273,10 @@ if(isset($_GET['p'])){
 	{
 		$s="U";
 	}
+  else
+  {
+    $s = "";
+  }
 	$qnotif = 	mysql_query("
 								select a.GUID as id from internship_registration a
 								join message_notif b on a.GUID=b.INTERN_ID
