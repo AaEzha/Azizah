@@ -240,4 +240,64 @@ function cekquotatopik(){
 		cekquota($d['topiknya']);
 	}
 }
+
+function cekgrade($n){
+	if($n>=1 and $n<=24){
+		$g = "F";
+	}elseif($n>=25 and $n<=29){
+		$g = "E-";
+	}elseif($n>=30 and $n<=34){
+		$g = "E";
+	}elseif($n>=35 and $n<=39){
+		$g = "E+";
+	}elseif($n>=40 and $n<=44){
+		$g = "D-";
+	}elseif($n>=45 and $n<=49){
+		$g = "D";
+	}elseif($n>=50 and $n<=54){
+		$g = "D+";
+	}elseif($n>=55 and $n<=59){
+		$g = "C-";
+	}elseif($n>=60 and $n<=64){
+		$g = "C";
+	}elseif($n>=65 and $n<=69){
+		$g = "C+";
+	}elseif($n>=70 and $n<=74){
+		$g = "B-";
+	}elseif($n>=75 and $n<=79){
+		$g = "B";
+	}elseif($n>=80 and $n<=84){
+		$g = "B+";
+	}elseif($n>=85 and $n<=89){
+		$g = "A-";
+	}elseif($n>=90 and $n<=94){
+		$g = "A";
+	}elseif($n>=95 and $n<=99){
+		$g = "A+";
+	}elseif($n==100){
+		$g = "I";
+	}else{
+		$g = FALSE;
+	}
+	return $g;
+}
+
+function totgrade($n)
+{
+	$tot = $n/14;
+	if($tot<=100 and $tot>=81){
+		$g = "A";
+	}elseif($tot<=80 and $tot>=61){
+		$g = "B";
+	}elseif($tot<=60 and $tot>=41){
+		$g = "C";
+	}elseif($tot<=40 and $tot>=21){
+		$g = "D";
+	}elseif($tot<=20 and $tot>=0){
+		$g = "E";
+	}else{
+		$g = FALSE;
+	}
+	return $g;
+}
 ?>
