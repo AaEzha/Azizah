@@ -140,7 +140,7 @@ if(isset($_SESSION['username'])){
           //-->
         </script>
         
-
+        <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
     <form action='ADMIN.php' name="admin" method='POST'>
         <input type='hidden' name='LinePerPage' id='LinePerPage' value='5'>
@@ -421,7 +421,7 @@ if(isset($_SESSION['username'])){
                                 <textarea name="yourcomment" id="inputYourcomment" class="form-control" rows="3" required="required" placeholder="Your Comment" style="text-align:center"></textarea>
                               </div>
                               <div class="form-group">
-                                <img src="images/captcha.png" width="314" height="125">
+                                <div class="g-recaptcha" data-sitekey="6LcqhxETAAAAAAqm8WMS4nYQZrZ3gG5YL2lbfUvV"></div>
                               </div>
                               <div class="form-group">
                                 <div class="col-sm-12 text-center">
@@ -441,7 +441,7 @@ if(isset($_SESSION['username'])){
                           <p align="left" class="muted style25">PO Box 1303</p>
                         </div>
                         <div class="col-sm-5 text-center">
-                          <img src="images/Capture.PNG" width="452" height="331">
+                          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3966.9725446995385!2d106.64095870747049!3d-6.134391272632894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1448232770256" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
                         </div>
                       </div>
                     </div>
