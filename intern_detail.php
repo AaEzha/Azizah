@@ -92,7 +92,7 @@ elseif($_SESSION['grup']=='LCU')
 }
 
 </style>
-<div class="title"><h1>Detail <small>|<a href="javascript:history.go(-1)" class="btn btn-link">Back</a></small></h1></div>
+<div class="title"><h1>Internship Detail <small>|<a href="javascript:history.go(-1)" class="btn btn-link">Back</a></small></h1></div>
 
 <div class="col-md-3">
 	<div class="panel panel-info">
@@ -100,7 +100,7 @@ elseif($_SESSION['grup']=='LCU')
 			<h3 class="panel-title"><img src="tampil.php?u=<?=$d['USER_DETAIL_ID'];?>" width="128"></h3>
 		</div>
 	</div>
-    <?php if($statusnya=="APPROVED"){ ?>
+    <?php if($statusnya!="REJECTED" or $statusnya=="PENDING"){ ?>
 	<a href="#" class="btn btn-success btn-block" title="Clearance Letter"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Clearance Letter</a>
     <?php } ?>
 
@@ -109,15 +109,18 @@ elseif($_SESSION['grup']=='LCU')
     <?php } ?>
 
     <?php
-    $qa = mysql_query("select * from assessment a join user_detail b on b.GUID=a.USER_DETAIL_ID where a.USER_DETAIL_ID='$_SESSION[iddetail]' and a.INTERN_ID='$_GET[i]'");
+    $qa = mysql_query("select * from assessment a where a.INTERN_ID='$_GET[i]'");
     $dqa = mysql_num_rows($qa);
-    if($dqa==1){
+    if($dqa==TRUE){
     ?>
-	<a href="#" class="btn btn-warning btn-block" title="Achievement Letter" disabled><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Achievement Letter</a>
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <a href="#" class="btn btn-warning btn-block" title="Achievement Letter"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Letter</a>
+        <a href="?p=intern_assessment&i=<?=$_GET['i'];?>" class="btn btn-primary btn-block" title="Your Points"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Points</a>
+    </div>
     <?php } ?>
 
     <?php if($statusnya=="DONE"){ ?>
-	<a href="#" class="btn btn-info btn-block" title="Thank You Letter" disabled><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Thank You Letter</a>
+	<a href="#" class="btn btn-info btn-block" title="Thank You Letter"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Thank You Letter</a>
     <?php } ?>
 </div>
 

@@ -21,11 +21,26 @@ if(isset($_GET['a']) and isset($_GET['x']))
     }
     elseif($aksi == md5("finish"))
     {
+      // update status internship
       mysql_query("update internship_registration set STATUS='DONE' where GUID='$idinter'");
+
+      // update quota
+      $dq = mysql_query("select * from internship_registration where GUID='$idinter'");
+      $ddq = mysql_fetch_array($dq);
+      $idtopik = $ddq['MASTER_TOPIC_ID'];
+      $weeksekarang = findweek(date('d'),'long');
+      $angkaweek = findweek(date('d'),'short');
+      $bln = date('m');
+      $thn = date('Y');
+      $qw = getdata("quota","TOPIC_ID='$idtopik' and YEAR='$thn' and MONTH='$bln'","WEEK".$angkaweek);
+      $sql = "update quota set ".$weeksekarang."='$qw'+1 where TOPIC_ID='$idtopik' and YEAR='$thn' and MONTH='$bln'";
+      mysql_query($sql);
+
+      // kirim email finish
       $_SESSION['namanya'] = data_user_detail($_SESSION['iddetail'],"FIRSTNAME");
       $_SESSION['emailnya'] = data_user_detail($_SESSION['iddetail'],"EMAIL");
       include 'email/finish.php';
-      eksyen('It is finished!','?p=intern');
+      eksyen('It is finished! ','?p=intern');
     }
     else
     {
@@ -113,7 +128,7 @@ T
   $i = 1;
   $id = $_SESSION['iddetail'];
   $unitid = ambildata($id,'user_detail','UNIT_ID');
-  $q = mysql_query("select * from internship_registration where STATUS='REJECTED' and UNIT_ID='$unitid'");
+  $q = mysql_query("select * from internship_registration where STATUS in ('REJECTED','DONE') and UNIT_ID='$unitid'");
   while($d = mysql_fetch_array($q)){ 
   ?>
     <tr>

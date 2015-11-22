@@ -281,7 +281,7 @@ if(isset($_GET['p'])){
 ?>
 <div id="mnotif">
   <?php while($dnotif = mysql_fetch_array($qnotif)){ ?>
-	<a href="?p=intern_detail&i=<?=$dnotif['id'];?>" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-envelope"></span></a>
+	<a href="?p=intern_detail&i=<?=$dnotif['id'];?>" class="btn btn-warning btn-lg" title="You have a message!"><span class="glyphicon glyphicon-envelope"></span></a>
   <?php } ?>
 </div>
 <?php
