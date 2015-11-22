@@ -25,6 +25,7 @@ $mail->isHTML(true);                                  // Set email format to HTM
 $mail->Subject = 'GMF AeroAsia Internship Program';
 $mail->Body    = '<p>Hai '.$_SESSION['namanya'].', your internship program has been evaluated. <p>
                     <p>For further information and Achievement Letter, you should log in to GMF AeroAsia\'s Web with your own account.</p>
+                    <p>And before you get a Thank You Letter, you must give us a testimony from your internship program detail page.</p>
 					<p>Enjoy your account.</p>';
 $mail->AltBody = 'Hai '.$_SESSION['namanya'].', your internship program has been evaluated. For further information and Achievement Letter, you should log in to GMF AeroAsia\'s Web with your own account. Enjoy your account.';
 

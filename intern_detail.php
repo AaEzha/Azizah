@@ -105,7 +105,11 @@ elseif($_SESSION['grup']=='LCU')
     <?php } ?>
 
     <?php if($statusnya=="REJECTED"){ ?>
-	<a href="#" class="btn btn-danger btn-block" title="Rejection Letter"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Rejection Letter</a>
+    <a href="#" class="btn btn-danger btn-block" title="Rejection Letter"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Rejection Letter</a>
+    <?php } ?>
+
+    <?php if($statusnya=="FINISHED"){ ?>
+    <a href="?p=testimonial&i=<?=$_GET['i'];?>" class="btn btn-success btn-block" title="Give Testimonial"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Give Testimonial</a>
     <?php } ?>
 
     <?php
@@ -113,10 +117,8 @@ elseif($_SESSION['grup']=='LCU')
     $dqa = mysql_num_rows($qa);
     if($dqa==TRUE){
     ?>
-    <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <a href="#" class="btn btn-warning btn-block" title="Achievement Letter"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Letter</a>
-        <a href="?p=intern_assessment&i=<?=$_GET['i'];?>" class="btn btn-primary btn-block" title="Your Points"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Points</a>
-    </div>
+    <a href="#" class="btn btn-warning btn-block" title="Achievement Letter"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Achievement Letter</a>
+    <a href="?p=intern_assessment&i=<?=$_GET['i'];?>" class="btn btn-primary btn-block" title="Your Points"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Assessment Points</a>
     <?php } ?>
 
     <?php if($statusnya=="DONE"){ ?>
@@ -162,6 +164,12 @@ elseif($_SESSION['grup']=='LCU')
             <td width="28%"><span style="margin-left:40px;">Status</span></td>
             <td width="77%"><span style="margin-left:60px;"><?=$d['STATUS'];?></span></td>
         </tr>
+        <?php if($statusnya=="DONE"){ ?>
+        <tr bgcolor="#666" height="43">
+            <td width="28%"><span style="margin-left:40px;">Testimonial</span></td>
+            <td width="77%"><span style="margin-left:60px;"><a href="blob.php?i=<?=$id;?>&mime=MIME_CV&file=CV" target="_blank" class="btn btn-primary btn-xs">Download</a></span></td>
+        </tr>
+        <?php } ?>
 	</table>
 </div>
 <div class="col-md-4">

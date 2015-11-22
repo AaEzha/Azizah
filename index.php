@@ -45,6 +45,7 @@ if(isset($_SESSION['username'])){
         <script type="text/javascript" src="js/jquery.placeholder.js"></script>
         <script type="text/javascript" src="js/jquery.inview.js"></script>
         <script type="text/javascript" src="js/isNumber.js"></script>
+        <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
         <!-- Load google maps api and call initializeMap function defined in app.js 
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;callback=initializeMap"></script>-->
         <!-- css3-mediaqueries.js for IE8 or older -->

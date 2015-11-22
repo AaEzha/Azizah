@@ -34,13 +34,19 @@ if(!isset($_GET['act'])){
 	</div>
 <?php
 }else{
+	echo "<script>tinymce.init({selector:'#detail,#need'});</script>";
 	$act = $_GET['act'];
 	switch ($act) {
 		case 'add':
 		if(isset($_POST['code'])){
 			$user = $_SESSION['username'];
 			$code = mysql_real_escape_string($_POST['code']);
-			$q = mysql_query("insert into program(GUID,PROGRAM_NAME,DTMCRT,USRCRT) values(uuid(),'$code',now(),'$user')");
+			$detail = mysql_real_escape_string($_POST['detail']);
+			$need = mysql_real_escape_string($_POST['need']);
+			$mulai = mysql_real_escape_string($_POST['mulai']);
+			$selesai = mysql_real_escape_string($_POST['selesai']);
+			$q = mysql_query("insert into program(GUID,PROGRAM_NAME,PROGRAM_DETAIL,PROGRAM_NEED,PROGRAM_START
+				,PROGRAM_END,DTMCRT,USRCRT) values(uuid(),'$code','$detail','$need','$mulai','$selesai',now(),'$user')");
 			if($q){
 				eksyen('','?p=program');
 			}else{
@@ -53,7 +59,25 @@ if(!isset($_GET['act'])){
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">Program Name</label>
 	    <div class="col-sm-4">
-	      <input type="text" class="form-control" name="code" placeholder="Program Name" maxlength="5">
+	      <input type="text" class="form-control" name="code" placeholder="Program Name" maxlength="35" required>
+	    </div>
+	    <div class="col-sm-2">
+	      <input type="text" class="form-control" id="tgls" name="mulai" placeholder="Start Date" maxlength="10" required>
+	    </div>
+	    <div class="col-sm-2">
+	      <input type="text" class="form-control" id="tglf" name="selesai" placeholder="Start Date" maxlength="10" required>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">Program Detail</label>
+	    <div class="col-sm-8">
+	      <textarea name="detail" id="detail" class="form-control" rows="3"></textarea>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">Program Need</label>
+	    <div class="col-sm-8">
+	      <textarea name="need" id="need" class="form-control" rows="3"></textarea>
 	    </div>
 	  </div>
 	  <div class="form-group">
@@ -81,7 +105,11 @@ if(!isset($_GET['act'])){
 		if(isset($_POST['code'])){
 			$user = $_SESSION['username'];
 			$code = mysql_real_escape_string($_POST['code']);
-			$q = mysql_query("update program set PROGRAM_NAME='$code', DTMUPD=now(), USRUPD='$user' where GUID='$guid'");
+			$detail = mysql_real_escape_string($_POST['detail']);
+			$need = mysql_real_escape_string($_POST['need']);
+			$mulai = mysql_real_escape_string($_POST['mulai']);
+			$selesai = mysql_real_escape_string($_POST['selesai']);
+			$q = mysql_query("update program set PROGRAM_NAME='$code', PROGRAM_DETAIL='$detail', PROGRAM_NEED='$need', PROGRAM_START='$mulai', PROGRAM_END='$selesai', DTMUPD=now(), USRUPD='$user' where GUID='$guid'");
 			if($q){
 				eksyen('','?p=program');
 			}else{
@@ -94,13 +122,31 @@ if(!isset($_GET['act'])){
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">Program Name</label>
 	    <div class="col-sm-4">
-	      <input type="text" class="form-control" name="code" placeholder="Program Name" maxlength="5" value="<?=$d['PROGRAM_NAME'];?>">
+	      <input type="text" class="form-control" name="code" placeholder="Program Name" maxlength="35" value="<?=$d['PROGRAM_NAME'];?>">
+	    </div>
+	    <div class="col-sm-2">
+	      <input type="text" class="form-control" id="tgls" name="mulai" placeholder="Start Date" maxlength="10" value="<?=$d['PROGRAM_START'];?>">
+	    </div>
+	    <div class="col-sm-2">
+	      <input type="text" class="form-control" id="tglf" name="selesai" placeholder="Start Date" maxlength="10" value="<?=$d['PROGRAM_END'];?>">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">Program Detail</label>
+	    <div class="col-sm-8">
+	      <textarea name="detail" id="detail" class="form-control" rows="3"><?=$d['PROGRAM_DETAIL'];?></textarea>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">Program Need</label>
+	    <div class="col-sm-8">
+	      <textarea name="need" id="need" class="form-control" rows="3"><?=$d['PROGRAM_NEED'];?></textarea>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
 	      <button type="submit" class="btn btn-success">Save</button>
-	      <button type="reset" class="btn btn-warning">Reset</button>
+	      <button type="reset" class="btn btn-default">Reset</button>
 	    </div>
 	  </div>
 	</form>

@@ -120,20 +120,16 @@ if($_b['LASTNAME']==''){
     <?php } ?>
     <?php if($_SESSION['grup']=='LCU'){ ?>
       <tr>
-        <td width="33%" height="100" bgcolor="#0F91AC"><div align="center" class="style39"><a href="?p=topic" class="style26">TOPIC</a></div></td>
+        <td width="33%" height="100" bgcolor="#15AFD0"><div align="center" class="style39"><a href="?p=topic" class="style26">TOPIC</a></div></td>
+        <td width="33%" height="100" bgcolor="#0F91AC"><div align="center" class="style39"><a href="?p=program" class="style26">INDUSTRY TOPIC</a></div></td>
         <td width="33%" height="100" bgcolor="#15AFD0"><div align="center" class="style39"><a href="?p=topics" class="style1"><strong>SELECT TOPIC</strong></a></div></td>
-        <td width="33%" height="100" bgcolor="#33C6F4"><div align="center" class="style39">
-          <div align="center"><a href="?p=quota_lcu" class="style38 style1">QUOTA</a></div>
-        </div></td>
       </tr>
       <tr>
+        <td width="33%" height="100" bgcolor="#89E1F3"><div align="center" class="style39">
+          <div align="center"><a href="?p=quota_lcu" class="style38 style1">QUOTA</a></div>
+        </div></td>
         <td width="33%" height="113" bgcolor="#33C6F4"><div align="center" class="style39"><a href="?p=institute" class="style38">INSTITUTE</a></div></td>
         <td width="33%" height="113" bgcolor="#89E1F3"><div align="center" class="style30"><a href="?p=major" class="style38">MAJOR</a></div></td>
-        <td width="33%" height="113" bgcolor="#0F91AC"><div align="center" class="style39">
-          <div align="center">
-            <p><a href="?p=letter"  class="style1"><strong>LETTER</strong></a></p>
-            </div>
-        </div></td>
       </tr>
     <?php } ?>
     <?php if($_SESSION['grup']=='USER'){ ?>
@@ -154,10 +150,24 @@ if($_b['LASTNAME']==''){
             });
 
             $("#inputTopik").change(function(){
-                var topik = $("#inputTopik").val();
+                var topik = $(this).val();
                 $.ajax({
                     url: "quota_get.php",
                     data: "topik="+topik,
+                    cache: false,
+                    success: function(msg){
+                        //jika data sukses diambil dari server kita tampilkan
+                        //di <select id=kel>
+                        $("#inputQuota").val(msg);
+                    }
+                });
+            });
+
+            $("#inputprojek").change(function(){
+                var projek = $(this).val();
+                $.ajax({
+                    url: "quota_projek.php",
+                    data: "projek="+topik,
                     cache: false,
                     success: function(msg){
                         //jika data sukses diambil dari server kita tampilkan
@@ -230,11 +240,11 @@ if($_b['LASTNAME']==''){
             </div>
             <div class="form-group">
               <label for="mulai" class="col-sm-2 control-label">Tanggal Mulai</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" name="mulai" id="mulai" class="form-control input-sm" required="required" value="<?=$dcek['START_DATE'];?>">
               </div>
               <label for="selesai" class="col-sm-2 control-label">Tanggal Selesai</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" name="selesai" id="selesai" class="form-control input-sm" required="required" value="<?=$dcek['END_DATE'];?>">
               </div>
             </div>
@@ -314,6 +324,8 @@ if($_b['LASTNAME']==''){
                 <?php } ?>
                 </select>
               </div>
+
+              <a type="button" class="btn btn-default btn-sm">button</a>
             </div>
             <div class="form-group">
               <label for="mulai" class="col-sm-2 control-label">Tanggal Mulai</label>

@@ -37,8 +37,8 @@ if(isset($_GET['a']) and isset($_GET['x']))
       mysql_query($sql);
 
       // kirim email finish
-      $_SESSION['namanya'] = data_user_detail($_SESSION['iddetail'],"FIRSTNAME");
-      $_SESSION['emailnya'] = data_user_detail($_SESSION['iddetail'],"EMAIL");
+      $_SESSION['namanya'] = data_user_detail($ddq['USER_DETAIL_ID'],"FIRSTNAME");
+      $_SESSION['emailnya'] = data_user_detail($ddq['USER_DETAIL_ID'],"EMAIL");
       include 'email/finish.php';
       eksyen('It is finished! ','?p=intern');
     }
