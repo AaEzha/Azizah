@@ -46,6 +46,8 @@ include("db_connection.php");
             font-weight: bold;
           }
           .style39 {color: #FFFFFF; font-size: 24px; }
+
+          #mnotif {position: fixed; bottom: 30px; right: 70px; z-index: 99;}
           -->
         </style>
         <script type="text/javascript">
@@ -146,6 +148,8 @@ include("db_connection.php");
 $qud = mysql_query("select firstname,lastname,email from user_detail where guid='$_SESSION[iddetail]'");
 $dud = mysql_fetch_array($qud);
 ?>
+
+
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -176,10 +180,10 @@ $dud = mysql_fetch_array($qud);
         }else{
         ?>
           <li><a href="inside.php">Home</a></li>
+            <?php if($_SESSION['grup']=='ADMIN'){ ?>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master Setting <span class="caret"></span></a>
             <ul class="dropdown-menu">
-            <?php if($_SESSION['grup']=='ADMIN'){ ?>
               <li> <a href="?p=user">User</a></li>
               <li> <a href="?p=unit">Unit</a></li>
               <li> <a href="?p=program">Program</a></li>
@@ -189,17 +193,22 @@ $dud = mysql_fetch_array($qud);
               <li> <a href="?p=institute">Institute</a></li>
               <li> <a href="?p=major">Major</a></li>
               <li> <a href="?p=education-level">Education Level</a></li>
+            </ul>
+          </li>
             <?php } ?>
             <?php if($_SESSION['grup']=='LCU'){ ?>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master Setting <span class="caret"></span></a>
+            <ul class="dropdown-menu">
               <li> <a href="?p=topic">Topic</a></li>
               <li> <a href="?p=assesment">Assessment</a></li>
               <li> <a href="?p=message">Message</a></li>
               <li> <a href="?p=institute">Institute</a></li>
               <li> <a href="?p=major">Major</a></li>
               <li> <a href="?p=letter">Letter</a></li>
-            <?php } ?>
             </ul>
           </li>
+            <?php } ?>
           <li><a href="inside.php#internship">Internship</a></li>
           <li><a href="inside.php#comment">Comment</a></li>
           <li><a href="proses_logout.php">Sign Out</a></li>
@@ -210,6 +219,7 @@ $dud = mysql_fetch_array($qud);
     </div><!--/.nav-collapse -->
   </div>
 </nav>
+
 
 <?php
 if(isset($_GET['p'])){
@@ -252,5 +262,28 @@ if(isset($_GET['p'])){
             </a>
         </div>
         <!-- ScrollUp button end -->
+<!-- N O T I F I C A T I O N -->
+<?php 
+	if($_SESSION['grup']=='USER')
+	{
+		$s="S";
+	}
+	elseif($_SESSION['grup']=='LCU')
+	{
+		$s="U";
+	}
+	$qnotif = 	mysql_query("
+								select a.GUID as id from internship_registration a
+								join message_notif b on a.GUID=b.INTERN_ID
+								join user_detail c on a.UNIT_ID=c.UNIT_ID
+								where c.GUID='$_SESSION[iddetail]' and b.STATUS='0' and b.SENDER='$s'
+								group by b.INTERN_ID
+							");
+?>
+<div id="mnotif">
+  <?php while($dnotif = mysql_fetch_array($qnotif)){ ?>
+	<a href="?p=intern_detail&i=<?=$dnotif['id'];?>" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-envelope"></span></a>
+  <?php } ?>
+</div>        
 </body>
 </html>

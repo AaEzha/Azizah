@@ -13,6 +13,16 @@ $ideducation = ambildata('x','user_education','EDUCATION_LEVEL_ID','USER_DETAIL_
 $idinstitute = ambildata('x','user_education','INSTITUTE_ID','USER_DETAIL_ID="'.$idintern.'"');
 $idmajor = ambildata('x','user_education','MAJOR_ID','USER_DETAIL_ID="'.$idintern.'"');
 
+// cek message_notif
+if($_SESSION['grup']=='USER')
+{
+    mysql_query("update message_notif set STATUS='1' where INTERN_ID='$id' and SENDER='S'");
+}
+elseif($_SESSION['grup']=='LCU')
+{
+    mysql_query("update message_notif set STATUS='1' where INTERN_ID='$id' and SENDER='U'");
+}
+
 ?>
 <style type="text/css">
 	.chat
@@ -80,7 +90,7 @@ $idmajor = ambildata('x','user_education','MAJOR_ID','USER_DETAIL_ID="'.$idinter
 }
 
 </style>
-<div class="title"><h1>Detail</h1></div>
+<div class="title"><h1>Detail <small>|<a href="javascript:history.go(-1)" class="btn btn-link">Back</a></small></h1></div>
 
 <div class="col-md-3">
 	<div class="panel panel-info">
@@ -188,6 +198,13 @@ $idmajor = ambildata('x','user_education','MAJOR_ID','USER_DETAIL_ID="'.$idinter
         		$pesan = mysql_real_escape_string($_POST['pesan']);
         		$internid = mysql_real_escape_string($_POST['internid']);
         		mysql_query("insert into message(GUID,INTERN_ID,SENDER_ID,MESSAGE,DTMCRT) values(uuid(),'$internid','$userid','$pesan',now())");
+                if($_SESSION['grup']=='USER')
+                {
+                    mysql_query("insert into message_notif(GUID,INTERN_ID,SENDER) values(uuid(),'$internid','U')");
+                }else
+                {
+                    mysql_query("insert into message_notif(GUID,INTERN_ID,SENDER) values(uuid(),'$internid','S')");
+                }
         		echo '<script language="javascript">location.replace("inside.php?p=intern_detail&i='.$internid.'"); </script>';
         	}
         	?>

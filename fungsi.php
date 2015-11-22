@@ -94,7 +94,7 @@ function time_ago( $date )
         return "No date provided";
     }
 
-    $periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
+    $periods = array("detik", "menit", "jam", "hari", "minggu", "bulan", "tahun", "dekade");
 
     $lengths = array("60","60","24","7","4.35","12","10");
 
@@ -114,12 +114,12 @@ function time_ago( $date )
     if( $now > $unix_date )
     {
         $difference = $now - $unix_date;
-        $tense = "ago";
+        $tense = "yang lalu";
     }
     else
     {
         $difference = $unix_date - $now;
-        $tense = "from now";
+        $tense = "dari sekarang";
     }
 
     for( $j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++ )
@@ -131,7 +131,8 @@ function time_ago( $date )
 
     if( $difference != 1 )
     {
-        $periods[$j].= "s";
+        //$periods[$j].= "s";
+        $periods[$j].= "";
     }
 
     return "$difference $periods[$j] {$tense}";
