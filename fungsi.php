@@ -300,4 +300,20 @@ function totgrade($n)
 	}
 	return $g;
 }
+
+function cektesti($id){
+	$q = mysql_query("select * from testimonial where INTERN_ID='$id'");
+	$jq = mysql_num_rows($q);
+	if($jq>=1){
+		return TRUE;
+	}else{
+		return FALSE;
+	}
+}
+
+function ambiltesti($id){
+	$q = mysql_query("select * from testimonial where INTERN_ID='$id'");
+	$d = mysql_fetch_array($q);
+	return $d['TESTIMONY'];
+}
 ?>

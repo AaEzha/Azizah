@@ -109,7 +109,7 @@ elseif($_SESSION['grup']=='LCU')
     <?php } ?>
 
     <?php if($statusnya=="FINISHED"){ ?>
-    <a href="?p=testimonial&i=<?=$_GET['i'];?>" class="btn btn-success btn-block" title="Give Testimonial"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Give Testimonial</a>
+    <a href="?p=testimonial&i=<?=$_GET['i'];?>" class="btn btn-success btn-block" title="Give Testimonial" <?php if(cektesti($d['GUID'])==FALSE){ echo "disabled"; }else{ echo "/"; } ?>><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Give Testimonial</a>
     <?php } ?>
 
     <?php
@@ -164,10 +164,10 @@ elseif($_SESSION['grup']=='LCU')
             <td width="28%"><span style="margin-left:40px;">Status</span></td>
             <td width="77%"><span style="margin-left:60px;"><?=$d['STATUS'];?></span></td>
         </tr>
-        <?php if($statusnya=="DONE"){ ?>
+        <?php if(cektesti($_GET['i'])==TRUE){ ?>
         <tr bgcolor="#666" height="43">
             <td width="28%"><span style="margin-left:40px;">Testimonial</span></td>
-            <td width="77%"><span style="margin-left:60px;"><a href="blob.php?i=<?=$id;?>&mime=MIME_CV&file=CV" target="_blank" class="btn btn-primary btn-xs">Download</a></span></td>
+            <td width="77%"><span style="margin-left:60px;"><?=ambiltesti($_GET['i']);?></td>
         </tr>
         <?php } ?>
 	</table>

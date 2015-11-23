@@ -442,6 +442,8 @@ if($_b['LASTNAME']==''){
 </div>
 </div>
 <!-- Internship section end -->
+
+<?php if($_SESSION['grup']=='ADMIN' or $_SESSION['grup']=='LCU'){ ?>
 <!-- Contact start -->
 <div id="comment" class="comment">
   <div class="section third-section" style="background:#000">
@@ -484,3 +486,4 @@ if($_b['LASTNAME']==''){
   </div>
 </div>
 <!-- comment section end -->
+<?php } ?>

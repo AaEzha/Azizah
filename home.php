@@ -169,11 +169,11 @@ $dud = mysql_fetch_array($qud);
           <?php if($_SESSION['grup']=='ADMIN' or $_SESSION['grup']=='LCU'){ ?>
           <li><a href="#mastersetting">Master Setting</a></li>
           <li><a href="#internship">Internship</a></li>
+          <li><a href="#comment">Guestbook</a></li>
           <?php }else{ ?>
           <li><a href="#mastersetting">Internship</a></li>
           <li><a href="#internship">History</a></li>
           <?php } ?>
-          <li><a href="#comment">Guestbook</a></li>
           <li><a href="proses_logout.php">Sign Out</a></li>
         <?php
         }else{
