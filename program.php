@@ -10,6 +10,7 @@ if(!isset($_GET['act'])){
 			    <tr>
 			      <th class="col-md-1 text-center">No</th>
 			      <th>Program Name</th>
+			      <th class="col-md-2 text-center">Unit</th>
 			      <th class="col-md-2 text-center">#</th>
 			    </tr>
 			  </thead>
@@ -22,6 +23,7 @@ if(!isset($_GET['act'])){
 			    <tr>
 			      <td class="text-center"><?=$i;?></td>
 			      <td><?php echo $dc['PROGRAM_NAME'];?></td>
+			      <td class="text-center"><?php echo getdata('unit',"GUID='".$dc['UNIT_ID']."'",'UNIT_NAME');?></td>
 			      <td class="text-center">
 			      	<a type="button" class="btn btn-xs btn-primary" href="?p=program&act=edit&guid=<?php echo $dc['GUID'];?>">Edit</a>
 			      	<a type="button" class="btn btn-xs btn-danger" href="?p=program&act=delete&guid=<?php echo $dc['GUID'];?>" <?php yakin();?>>Delete</a>

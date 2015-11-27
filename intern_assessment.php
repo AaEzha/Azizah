@@ -119,12 +119,12 @@ if(isset($_POST['aspek']))
 					<td class="text-center">
 						<input type="hidden" name="aspek[]" id="inputAspek[]" class="form-control" value="<?=$dd['GUID'];?>">
 						<?php if($dqa['total']!=0){ ?>
-							<?=getdata('assessment',"ASSESSMENT_ASPECT_ID='$dd[GUID]'","VALUE");?>
+							<?=getdata('assessment',"ASSESSMENT_ASPECT_ID='$dd[GUID]' and INTERN_ID='$_GET[i]'","VALUE");?>
 						<?php }else{ ?>
-						<input type="text" name="nilai[]" id="input" class="form-control text-center input-sm" value="<?=getdata('assessment',"ASSESSMENT_ASPECT_ID='$dd[GUID]'","VALUE");?>" required="required" onkeypress="return isNumber(event)" maxlength="3"<?php if($dqa['total']!=0){ echo " disabled";} ?>>
+						<input type="text" name="nilai[]" id="input" class="form-control text-center input-sm" value="<?=getdata('assessment',"ASSESSMENT_ASPECT_ID='$dd[GUID]' and INTERN_ID='$_GET[i]'","VALUE");?>" required="required" onkeypress="return isNumber(event)" maxlength="3"<?php if($dqa['total']!=0){ echo " disabled";} ?>>
 						<?php } ?>
 					</td>
-					<td class="text-center"><?=getdata('assessment',"ASSESSMENT_ASPECT_ID='$dd[GUID]'","GRADE");?></td>
+					<td class="text-center"><?=getdata('assessment',"ASSESSMENT_ASPECT_ID='$dd[GUID]' and INTERN_ID='$_GET[i]'","GRADE");?></td>
 				</tr>
 				<?php $i++; } ?>
 				<?php $a++; } ?>

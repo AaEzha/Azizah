@@ -138,13 +138,16 @@ if($_b['LASTNAME']==''){
         <script type="text/javascript">
           $(document).ready(function() {
             $('#fprojek').hide();
+            $('#dprojek').hide();
             $('#inputProgram').change(function(){
               var grup = $(this).val();
               if(grup == "5b735728-7db6-11e5-8cd3-28d244bd1b19"){
                 $('#fprojek').show();
+				$('#dprojek').show();
                 $('#ftopik').hide();
               }else{
                 $('#fprojek').hide();
+				$('#dprojek').hide();
                 $('#ftopik').show();
               }
             });
@@ -156,8 +159,6 @@ if($_b['LASTNAME']==''){
                     data: "topik="+topik,
                     cache: false,
                     success: function(msg){
-                        //jika data sukses diambil dari server kita tampilkan
-                        //di <select id=kel>
                         $("#inputQuota").val(msg);
                     }
                 });
@@ -167,12 +168,10 @@ if($_b['LASTNAME']==''){
                 var projek = $(this).val();
                 $.ajax({
                     url: "quota_projek.php",
-                    data: "projek="+topik,
+                    data: "projek="+projek,
                     cache: false,
                     success: function(msg){
-                        //jika data sukses diambil dari server kita tampilkan
-                        //di <select id=kel>
-                        $("#inputQuota").val(msg);
+                        $("#dprojek").html(msg);
                     }
                 });
             });
@@ -207,7 +206,7 @@ if($_b['LASTNAME']==''){
             <div class="form-group" id="ftopik">
               <label for="inputTopik" class="col-sm-2 control-label">Topik</label>
               <div class="col-sm-5">
-                <select name="topik" id="inputTopik" class="form-control input-sm" required="required">
+                <select name="topik" id="inputTopik" class="form-control input-sm">
                   <option value="">--</option>
                 <?php
                 $app = mysql_query("select mt.GUID as idtopik, mt.TOPIC_NAME as namatopik from master_topic mt
@@ -228,7 +227,7 @@ if($_b['LASTNAME']==''){
             <div class="form-group" id="fprojek">
               <label for="inputprojek" class="col-sm-2 control-label">Projek</label>
               <div class="col-sm-5">
-                <select name="projek" id="inputprojek" class="form-control input-sm" required="required">
+                <select name="projek" id="inputprojek" class="form-control input-sm">
                   <option value="0">--</option>
                 <?php
                 $app = mysql_query("select * from program order by PROGRAM_NAME asc");
@@ -237,6 +236,7 @@ if($_b['LASTNAME']==''){
                 <?php } ?>
                 </select>
               </div>
+			  <div id="dprojek"></div>
             </div>
             <div class="form-group">
               <label for="mulai" class="col-sm-2 control-label">Tanggal Mulai</label>
@@ -294,7 +294,7 @@ if($_b['LASTNAME']==''){
             <div class="form-group" id="ftopik">
               <label for="inputTopik" class="col-sm-2 control-label">Topik</label>
               <div class="col-sm-5">
-                <select name="topik" id="inputTopik" class="form-control input-sm" required="required">
+                <select name="topik" id="inputTopik" class="form-control input-sm">
                   <option value="">--</option>
                 <?php
                 $app = mysql_query("select mt.GUID as idtopik, mt.TOPIC_NAME as namatopik from master_topic mt
@@ -315,7 +315,7 @@ if($_b['LASTNAME']==''){
             <div class="form-group" id="fprojek">
               <label for="inputprojek" class="col-sm-2 control-label">Projek</label>
               <div class="col-sm-5">
-                <select name="projek" id="inputprojek" class="form-control input-sm" required="required">
+                <select name="projek" id="inputprojek" class="form-control input-sm">
                   <option value="0">--</option>
                 <?php
                 $app = mysql_query("select * from program order by PROGRAM_NAME asc");
@@ -324,8 +324,7 @@ if($_b['LASTNAME']==''){
                 <?php } ?>
                 </select>
               </div>
-
-              <a type="button" class="btn btn-default btn-sm">button</a>
+			  <div id="dprojek"></div>
             </div>
             <div class="form-group">
               <label for="mulai" class="col-sm-2 control-label">Tanggal Mulai</label>

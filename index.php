@@ -2,7 +2,7 @@
 include("db_connection.php"); 
 
 if(isset($_SESSION['username'])){
-  header("location:inside.php");
+  header("location:home.php");
 }
 ?>
 

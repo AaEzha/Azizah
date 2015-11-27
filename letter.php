@@ -1,131 +1,40 @@
 <?php
-if(isset($_GET['type'])){
-	$type = $_GET['type'];
-	switch ($type) {
-		case 'confirm':
-			$title = "Confirm Clearance Letter";
-			break;
+$q = mysql_query("select * from settings where S_TYPE='letter_pic'");
+$d = mysql_fetch_array($q);
+$j = mysql_num_rows($q);
+if($j==0){
+	mysql_query("insert into settings(S_TYPE,S_NAME,S_VALUE) values('letter_pic','','')");
+	eksyen('','?p=letter');
+}
 
-		case 'reject':
-			$title = "Reject Clearance Letter";
-			break;
-
-		case 'assessment':
-			$title = "Assessment Letter";
-			break;
-
-		case 'finish':
-			$title = "End of Internship Letter";
-			break;
-		
-		default:
-			$title = "Error";
-			break;
-	}
-
-	echo "<h1>Letter <small>Configuration | <a href='?p=letter'>Back</a></small></h1>";
-	$sql = mysql_query("select * from letter where TYPE='$type'");
-?>
-	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-		<form action="" method="POST" role="form">
-			<legend>Library</legend>
-			<dl>
-				<dt>$i_name</dt>
-				<dfn>Internship name</dfn>
-			</dl>
-			<dl>
-				<dt>$i_name</dt>
-				<dfn>Internship name</dfn>
-			</dl>
-			<dl>
-				<dt>$i_name</dt>
-				<dfn>Internship name</dfn>
-			</dl>
-		</form>
-	</div>
-	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-		<form action="" method="POST" role="form">
-			<legend><?=$title;?></legend>
-		
-			<div class="form-group">
-				<label for="">Subjek</label>
-				<input type="text" class="form-control" id="" placeholder="Input field">
-			</div>
-		
-			<div class="form-group">
-				<label for="">label</label>
-				<input type="text" class="form-control" id="" placeholder="Input field">
-			</div>
-		
-			<div class="form-group">
-				<label for="">label</label>
-				<input type="text" class="form-control" id="" placeholder="Input field">
-			</div>
-		
-			
-		
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-	</div>
-<?php	
-}else{
-?>
-<h1>Letter <small>Configuration</small></h1>
-<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	<div class="panel panel-info">
-		  <div class="panel-heading">
-				<h3 class="panel-title">Confirm Clearance Letter</h3>
-		  </div>
-		  <div class="panel-body">
-				<a href="?p=letter&type=confirm" class="btn btn-primary btn-block">Edit</a>
-		  </div>
-		  <div class="panel-footer">
-		  		<a href="#" class="btn btn-info btn-block">Preview</a>
-		  </div>
-	</div>
-</div>	
-
-<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	<div class="panel panel-info">
-		  <div class="panel-heading">
-				<h3 class="panel-title">Reject Clearance Letter</h3>
-		  </div>
-		  <div class="panel-body">
-				<a href="?p=letter&type=reject" class="btn btn-primary btn-block">Edit</a>
-		  </div>
-		  <div class="panel-footer">
-		  		<a href="#" class="btn btn-info btn-block">Preview</a>
-		  </div>
-	</div>
-</div>	
-
-<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	<div class="panel panel-info">
-		  <div class="panel-heading">
-				<h3 class="panel-title">Assessment Letter</h3>
-		  </div>
-		  <div class="panel-body">
-				<a href="?p=letter&type=assessment" class="btn btn-primary btn-block">Edit</a>
-		  </div>
-		  <div class="panel-footer">
-		  		<a href="#" class="btn btn-info btn-block">Preview</a>
-		  </div>
-	</div>
-</div>	
-
-<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	<div class="panel panel-info">
-		  <div class="panel-heading">
-				<h3 class="panel-title">End of Internship Letter</h3>
-		  </div>
-		  <div class="panel-body">
-				<a href="?p=letter&type=finish" class="btn btn-primary btn-block">Edit</a>
-		  </div>
-		  <div class="panel-footer">
-		  		<a href="#" class="btn btn-info btn-block">Preview</a>
-		  </div>
-	</div>
-</div>	
-<?php
+if(isset($_POST['nama'])){
+	$tipe = mysql_real_escape_string($_POST['tipe']);
+	$nama = mysql_real_escape_string($_POST['nama']);
+	$rank = mysql_real_escape_string($_POST['rank']);
+	mysql_query("update settings set S_NAME='$nama', S_VALUE='$rank' where S_TYPE='$tipe'");
+	eksyen('','?p=letter');
 }
 ?>
+
+	<h1>Letter <small>Configuration</small></h1>
+	<form class="form-horizontal" action="" method="post">
+	  <input type="hidden" name="tipe" value="letter_pic">
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">PIC Name</label>
+	    <div class="col-sm-4">
+	      <input type="text" class="form-control input-sm" name="nama" placeholder="PIC Name" maxlength="35" value="<?=$d['S_NAME'];?>">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">PIC Rank</label>
+	    <div class="col-sm-4">
+	      <input type="text" class="form-control input-sm" name="rank" placeholder="PIC Rank" maxlength="35" value="<?=$d['S_VALUE'];?>">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-success">Save</button>
+	      <button type="reset" class="btn btn-default">Reset</button>
+	    </div>
+	  </div>
+	</form>

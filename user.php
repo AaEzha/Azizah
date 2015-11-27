@@ -78,6 +78,7 @@ if(!isset($_GET['act'])){
   <h1>Add Unit <small>| <a href="?p=user">back</a></small></h1>
   <script type="text/javascript">
     $(document).ready(function() {
+	  $('#unit').hide();
       $('#inputGrup').change(function(){
         var grup = $(this).val();
         if(grup == "3c8027d0-3dcf-11e5-901c-00ff7f4e65c4"){

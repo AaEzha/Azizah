@@ -25,7 +25,7 @@ if(isset($_POST['namadepan'])){
 		//--------------------------photo----------------------------------//
 	    $tmp_name  = $_FILES['foto']['tmp_name']; //nama local temp file di server
 	    $file_size = $_FILES['foto']['size']; //ukuran file (dalam bytes)
-      $file_type = $_FILES['foto']['type']; //tipe filenya (langsung detect MIMEnya)
+		$file_type = $_FILES['foto']['type']; //tipe filenya (langsung detect MIMEnya)
         $tipe = array("image/jpeg","image/png","image/gif");
         if(!in_array($file_type, $tipe)) eksyen('Improper File Type for Foto. Use JPEG/JPG/PNG/GIF only.','?p=profil_user');
 	    $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
@@ -40,7 +40,7 @@ if(isset($_POST['namadepan'])){
 	    //--------------------------cv----------------------------------//
 	    $tmp_name  = $_FILES['cv']['tmp_name']; //nama local temp file di server
 	    $file_size = $_FILES['cv']['size']; //ukuran file (dalam bytes)
-      $file_type = $_FILES['cv']['type']; //tipe filenya (langsung detect MIMEnya)
+		$file_type = $_FILES['cv']['type']; //tipe filenya (langsung detect MIMEnya)
         if($file_type!="application/pdf") eksyen('Improper File Type for CV. Use PDF only.','?p=profil_user');
 	    $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
 	    $cv = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
@@ -140,6 +140,36 @@ if(isset($_POST['namadepan'])){
       <input type="text" name="hobi" id="inputHobi" class="form-control" value="<?=$d['HOBBY'];?>" required="required" maxlength="160">
     </div>
   </div>
+  <div class="form-group">
+        <label class="col-sm-2 control-label">Jenjang Pendidikan</label>
+        <div class="col-sm-4">
+          <select name="jenjang" id="inputJenjang" class="form-control input-sm" required="required">
+            <?php
+            $qj = mysql_query("select * from education_level order by sequence asc");
+            while($dj = mysql_fetch_array($qj)){
+            ?>
+            <option value="<?=$dj['GUID'];?>"><?=$dj['EDUCATION_LEVEL_NAME'];?></option>
+            <?php } ?>
+          </select>
+        </div>
+      </div>
+      <script>
+      $(function() {
+        
+      });
+      </script>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Instansi</label>
+        <div class="col-sm-4">
+          <input name="instansi" id="ins" class="form-control input-sm" required="required">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Jurusan</label>
+        <div class="col-sm-4">
+          <input name="jurusan" id="inputJurusan" class="form-control input-sm" required="required">
+        </div>
+      </div>
   <div class="form-group" style="background:#333">
     <label class="col-sm-2 control-label">User ID</label>
     <div class="col-sm-4">

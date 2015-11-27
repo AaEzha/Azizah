@@ -118,8 +118,19 @@ include("db_connection.php");
             "<?=$di['INSTITUTE_NAME'];?>",
           <?php } ?>
           ];
+		  var jurusan = [
+          <?php
+          $qi = mysql_query("select * from major order by MAJOR_NAME");
+          while($di = mysql_fetch_array($qi)){
+          ?>
+            "<?=$di['MAJOR_NAME'];?>",
+          <?php } ?>
+          ];
           $("#ins").autocomplete({
             source: availableTags
+          });
+		  $("#inputJurusan").autocomplete({
+            source: jurusan
           });
 
           $( "#tgl,#tgls,#tglf" ).datepicker({
@@ -141,7 +152,7 @@ include("db_connection.php");
         </script>          
 </head>
     
-<body onLoad="MM_preloadImages('images/upl-photo.png','images/upl-doc.png','images/internship_.png','images/pengajuan_.png')">
+<body onLoad="MM_preloadImages('images/internship_.png','images/pengajuan_.png')">
 
 <?php
 $qud = mysql_query("select firstname,lastname,email from user_detail where guid='$_SESSION[iddetail]'");

@@ -1,6 +1,6 @@
 <?php session_start(); include("db_connection.php"); 
 if(!isset($_POST['program'])){
-	eksyen('','inside.php');
+	eksyen('','home.php');
 }else{
     $guid = mysql_real_escape_string($_POST['guid']);
     $program = mysql_real_escape_string($_POST['program']);
@@ -16,7 +16,7 @@ if(!isset($_POST['program'])){
         $tmp_name  = $_FILES['proposal']['tmp_name']; //nama local temp file di server
         $file_size = $_FILES['proposal']['size']; //ukuran file (dalam bytes)
         $file_type = $_FILES['proposal']['type']; //tipe filenya (langsung detect MIMEnya)
-            if($file_type!="application/pdf") eksyen('Improper File Type for Proposal. Use PDF only.','inside.php#mastersetting');
+            if($file_type!="application/pdf") eksyen('Improper File Type for Proposal. Use PDF only.','home.php#mastersetting');
         $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
         $proposal = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
         $proposal = mysql_real_escape_string($proposal) or die("Tidak dapat membaca source file"); // parse image ke string
@@ -30,7 +30,7 @@ if(!isset($_POST['program'])){
         $tmp_name  = $_FILES['pengantar']['tmp_name']; //nama local temp file di server
         $file_size = $_FILES['pengantar']['size']; //ukuran file (dalam bytes)
         $file_type = $_FILES['pengantar']['type']; //tipe filenya (langsung detect MIMEnya)
-            if($file_type!="application/pdf") eksyen('Improper File Type for Pengantar. Use PDF only.','inside.php#mastersetting');
+            if($file_type!="application/pdf") eksyen('Improper File Type for Pengantar. Use PDF only.','home.php#mastersetting');
         $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
         $pengantar = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
         $pengantar = mysql_real_escape_string($pengantar) or die("Tidak dapat membaca source file"); // parse image ke string
@@ -45,7 +45,7 @@ if(!isset($_POST['program'])){
     $q = mysql_query("update internship_registration set MASTER_TOPIC_ID='$topik', PROGRAM_ID='$program', INTERNSHIP_PROJECT_ID='$projek', START_DATE='$mulai', END_DATE='$selesai', DTMUPD=now(), USRUPD='$usrcrt' where GUID='$guid'");
     // OK
     if ($q) {
-        eksyen('Pendaftaran Internship berhasil! Tunggu konfirmasinya via email Anda','inside.php');
+        eksyen('Pendaftaran Internship berhasil! Tunggu konfirmasinya via email Anda','home.php');
     } else {
         eksyen('Pendaftaran Internship gagal! Hubungi Administrator','index.php');
     }

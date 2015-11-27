@@ -1,4 +1,4 @@
-<?php session_start(); include("db_connection.php"); 
+<?php session_start(); include("db_connection.php");
 if(!isset($_POST['program'])){
 	eksyen('','inside.php');
 }else{
@@ -39,9 +39,9 @@ if(!isset($_POST['program'])){
     $q = mysql_query("insert into internship_registration(GUID,USER_DETAIL_ID,EDUCATION_LEVEL_ID,MASTER_TOPIC_ID,PROGRAM_ID,INTERNSHIP_PROJECT_ID,START_DATE,END_DATE,PROPOSAL,MIME_PROPOSAL,COVER_LETTER,MIME_COVER_LETTER,DTMCRT,USRCRT) values(uuid(),'$iduserdetail','$idedu','$topik','$program','$projek','$mulai','$selesai','$proposal','$file_type1','$pengantar','$file_type2',now(),'$usrcrt')");
     // OK
     if ($q) {
-        eksyen('Pendaftaran Internship berhasil! Tunggu konfirmasinya via email Anda','inside.php');
+        eksyen('Pendaftaran Internship berhasil! Tunggu konfirmasinya via email Anda','home.php');
     } else {
-        eksyen('Pendaftaran Internship gagal! Hubungi Administrator','index.php');
+        eksyen('Pendaftaran Internship gagal! Hubungi Administrator','home.php');
     }
     
     

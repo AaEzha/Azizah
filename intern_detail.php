@@ -109,7 +109,7 @@ elseif($_SESSION['grup']=='LCU')
     <?php } ?>
 
     <?php if($statusnya=="FINISHED"){ ?>
-    <a href="?p=testimonial&i=<?=$_GET['i'];?>" class="btn btn-success btn-block" title="Give Testimonial" <?php if(cektesti($d['GUID'])==FALSE){ echo "disabled"; }else{ echo "/"; } ?>><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Give Testimonial</a>
+    <a class="btn btn-success btn-block" title="Give Testimonial" <?php if(cektesti($d['GUID'])==TRUE){ echo "disabled"; }else{ echo " href='?p=testimonial&i=$_GET[i]'"; } ?>><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Give Testimonial</a>
     <?php } ?>
 
     <?php
@@ -237,7 +237,7 @@ elseif($_SESSION['grup']=='LCU')
                 {
                     mysql_query("insert into message_notif(GUID,INTERN_ID,SENDER) values(uuid(),'$internid','S')");
                 }
-        		echo '<script language="javascript">location.replace("inside.php?p=intern_detail&i='.$internid.'"); </script>';
+        		echo '<script language="javascript">location.replace("home.php?p=intern_detail&i='.$internid.'"); </script>';
         	}
         	?>
         	<form action="" method="post">

@@ -66,7 +66,7 @@ if(isset($_POST['iduserdetail'])){
 		mysql_query("update user_detail set UNIT_ID='$unitid' where GUID='$iduserdetail'");
 	}
 */
-	eksyen('Saved!','inside.php#internship');
+	eksyen('Saved!','home.php#internship');
 }
 ?>
 <form action="" method="post">
