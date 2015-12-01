@@ -17,9 +17,12 @@ if(isset($_POST['namadepan'])){
 	$jk = mysql_real_escape_string($_POST['jk']);
 	$alamat = mysql_real_escape_string($_POST['alamat']);
 	$tel1 = mysql_real_escape_string($_POST['tel1']);
-	$tel2 = mysql_real_escape_string($_POST['tel2']);
-	$email = mysql_real_escape_string($_POST['email']);
-	$hobi = mysql_real_escape_string($_POST['hobi']);
+  $tel2 = mysql_real_escape_string($_POST['tel2']);
+  $email = mysql_real_escape_string($_POST['email']);
+  $hobi = mysql_real_escape_string($_POST['hobi']);
+  $jenjang = mysql_real_escape_string($_POST['jenjang']);
+  $instansi = mysql_real_escape_string($_POST['instansi']);
+  $jurusan = mysql_real_escape_string($_POST['jurusan']);
 
 	if($_FILES['foto']['name']!=''){
 		//--------------------------photo----------------------------------//
@@ -49,6 +52,44 @@ if(isset($_POST['namadepan'])){
 	    mysql_query("update user_detail set CV='$cv', MIME_CV='$file_type' where USER_ID='$iduser'");
 	    //--------------------------cv----------------------------------//
 	}
+
+  // instansi
+   $qi = mysql_query("select GUID,INSTITUTE_NAME from institute where INSTITUTE_NAME='$instansi'");
+    $ci = mysql_num_rows($qi);
+    if($ci==1){
+        $di = mysql_fetch_array($qi);
+        $idins = $di['GUID'];
+    }else{
+        mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_TYPE,DTMCRT,USRCRT) values(uuid(),'$instansi','',now(),'$iduser')");
+        $di = mysql_fetch_array($qi);
+        $idins = $di['GUID'];
+        // nanti harus dihapus
+        $_SESSION['bikinsekolah'] = $instansi;
+        $_SESSION['idsekolah'] = $idins;
+    }
+
+  // jurusan
+    $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME='$jurusan'");
+    $ci = mysql_num_rows($qi);
+    if($ci==1){
+        $di = mysql_fetch_array($qi);
+        $idjur = $di['GUID'];
+    }else{
+        mysql_query("insert into major(GUID,MAJOR_NAME,DTMCRT,USRCRT) values(uuid(),'$jurusan',now(),'$iduser')");
+        $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME='$jurusan'");
+        $di = mysql_fetch_array($qi);
+        $idjur = $di['GUID'];
+    }
+
+  // user education
+    $que = mysql_query("select GUID from user_education where USER_DETAIL_ID='$iduserdetail'");
+    $due = mysql_num_rows($que);
+    if($due==1){
+      mysql_query("update user_education set EDUCATION_LEVEL_ID='$jenjang',INSTITUTE_ID='$idins',MAJOR_ID='$idjur' where USER_DETAIL_ID='$iduserdetail'");
+    }else{
+      mysql_query("insert into user_education(GUID,USER_DETAIL_ID,EDUCATION_LEVEL_ID,INSTITUTE_ID,MAJOR_ID,DTMCRT,USRCRT) values(uuid(),'$iduserdetail','$jenjang','$idins','$idjur',now(),'$userr')");
+    }
+    
 
 	// password
 	if($_POST['pw']!=""){

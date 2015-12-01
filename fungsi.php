@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Jakarta");
 
-define("URL","http://www.google.com"); // tanpa garis miring dibelakang
+define("URL","http://www.teknomatika.org/intra-gmf"); // tanpa garis miring dibelakang
 
 function sesi($grup){
 	if($_SESSION['grup'] != $grup){
