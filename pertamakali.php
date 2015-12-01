@@ -1,5 +1,6 @@
 <?php
 include 'db_connection.php';
+// hapus tabel-tabel
 mysql_query("truncate assessment");
 mysql_query("truncate guestbook");
 mysql_query("truncate institute");
