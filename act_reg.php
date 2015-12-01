@@ -78,6 +78,7 @@ if(!isset($_POST['noid'])){
         mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_TYPE,DTMCRT,USRCRT) values(uuid(),'$instansi','',now(),'$userid')");
         $di = mysql_fetch_array($qi);
         $idins = $di['GUID'];
+        // nanti harus dihapus
         $_SESSION['bikinsekolah'] = $instansi;
         $_SESSION['idsekolah'] = $idins;
     }

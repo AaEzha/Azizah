@@ -20,7 +20,7 @@ mysql_query("truncate user_education");
 $a = mysql_query("select uuid() as iduser");
 $aa = mysql_fetch_array($a);
 $iduser = $aa['iduser'];
-mysql_query("insert into user values('$iduser','admin',md5('123admin456'),'','1',now(),now(),now(),'admin'");
+mysql_query("insert into user values('$iduser','admin',md5('123admin456'),'','1',now(),now(),now(),'admin')");
 
 // uuid user_detail
 $ab = mysql_query("select uuid() as iduser");
