@@ -172,9 +172,9 @@ if(!isset($_GET['act'])){
       $unit = mysql_real_escape_string($_POST['unit']);
       if($_POST['pw']!=""){
         $pw = mysql_real_escape_string($_POST['pw']);
-        $q = mysql_query("update user set USERNAME='$userid', PASSWORD=md5('$pw'), DTMUPD=now(), USRUPD='$user' where GUID='$guid'");
+        $q = mysql_query("update user set VERIFIED='1', USERNAME='$userid', PASSWORD=md5('$pw'), DTMUPD=now(), USRUPD='$user' where GUID='$guid'");
       }else{
-        $q = mysql_query("update user set USERNAME='$userid', DTMUPD=now(), USRUPD='$user' where GUID='$guid'");
+        $q = mysql_query("update user set VERIFIED='1', USERNAME='$userid', DTMUPD=now(), USRUPD='$user' where GUID='$guid'");
       }
       
       if($q){
@@ -242,7 +242,7 @@ if(!isset($_GET['act'])){
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success">Save & Activate</button>
         <button type="reset" class="btn btn-warning">Reset</button>
       </div>
     </div>
