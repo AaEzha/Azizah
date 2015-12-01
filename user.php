@@ -107,7 +107,7 @@ if(!isset($_GET['act'])){
       <div class="col-sm-4">
         <select name="grup" id="inputGrup" class="form-control" required="required">
           <?php
-          $qg = mysql_query("select GUID, GROUP_NAME from ms_group");
+          $qg = mysql_query("select GUID, GROUP_NAME from ms_group order by GROUP_NAME desc");
           while($dg = mysql_fetch_array($qg)){
           ?>
           <option value="<?=$dg['GUID'];?>"><?=$dg['GROUP_NAME'];?></option>

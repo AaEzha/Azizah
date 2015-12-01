@@ -1,6 +1,9 @@
 <?php
 session_start();
 include("db_connection.php");
+if(!isset($_SESSION['username'])){
+  header("location:index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

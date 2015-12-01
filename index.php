@@ -4,6 +4,11 @@ include("db_connection.php");
 if(isset($_SESSION['username'])){
   header("location:home.php");
 }
+
+// cek
+if(isset($_SESSION['bikinsekolah'])){
+  eksyen('Please complete your college detail','add-college.php');
+}
 ?>
 
 <!DOCTYPE html>

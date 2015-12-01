@@ -75,9 +75,11 @@ if(!isset($_POST['noid'])){
         $di = mysql_fetch_array($qi);
         $idins = $di['GUID'];
     }else{
-        mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_TYPE,DTMCRT,USRCRT) values(uuid(),'$institute','A',now(),'$userid')");
+        mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_TYPE,DTMCRT,USRCRT) values(uuid(),'$instansi','',now(),'$userid')");
         $di = mysql_fetch_array($qi);
         $idins = $di['GUID'];
+        $_SESSION['bikinsekolah'] = $instansi;
+        $_SESSION['idsekolah'] = $idins;
     }
 
     // jurusan
