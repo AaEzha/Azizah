@@ -28,7 +28,7 @@ if(isset($_POST['namadepan'])){
 		//--------------------------photo----------------------------------//
 	    $tmp_name  = $_FILES['foto']['tmp_name']; //nama local temp file di server
 	    $file_size = $_FILES['foto']['size']; //ukuran file (dalam bytes)
-		$file_type = $_FILES['foto']['type']; //tipe filenya (langsung detect MIMEnya)
+		  $file_type = $_FILES['foto']['type']; //tipe filenya (langsung detect MIMEnya)
         $tipe = array("image/jpeg","image/png","image/gif");
         if(!in_array($file_type, $tipe)) eksyen('Improper File Type for Foto. Use JPEG/JPG/PNG/GIF only.','?p=profil_user');
 	    $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
@@ -43,7 +43,7 @@ if(isset($_POST['namadepan'])){
 	    //--------------------------cv----------------------------------//
 	    $tmp_name  = $_FILES['cv']['tmp_name']; //nama local temp file di server
 	    $file_size = $_FILES['cv']['size']; //ukuran file (dalam bytes)
-		$file_type = $_FILES['cv']['type']; //tipe filenya (langsung detect MIMEnya)
+		  $file_type = $_FILES['cv']['type']; //tipe filenya (langsung detect MIMEnya)
         if($file_type!="application/pdf") eksyen('Improper File Type for CV. Use PDF only.','?p=profil_user');
 	    $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
 	    $cv = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file

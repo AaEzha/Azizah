@@ -77,7 +77,7 @@ if(isset($_POST['iduserdetail'])){
       <th class="col-md-2 text-center">Nama</th>
       <th class="col-md-2 text-center">Program</th>
       <th class="text-center">Topik/Referensi</th>
-      <th class="col-md-2 text-center">Periode</th>
+      <th class="col-md-2 text-center">Detail</th>
       <th class="col-md-1 text-center">Accept</th>
       <th class="col-md-1 text-center">Reject</th>
     </tr>
@@ -97,7 +97,7 @@ if(isset($_POST['iduserdetail'])){
       <td class="text-center"><?=ambildata($d['USER_DETAIL_ID'],'user_detail','FIRSTNAME');?></td>
       <td class="text-center"><?=ambildata($d['PROGRAM_ID'],'internship_program','PROGRAM');?></td>
       <td class="text-center"><?=ambildata($d['MASTER_TOPIC_ID'],'master_topic','TOPIC_NAME');?></td>
-      <td class="text-center"><?=$d['START_DATE'];?> / <?=$d['END_DATE'];?></td>
+      <td class="text-center"><a href="?p=intern_detail&i=<?=$d['GUID'];?>" class="btn btn-info btn-sm" title="Internship Detail">Detail</a></td>
       <td class="text-center"><input type="checkbox" name="intern[]" value="<?=$d['GUID'];?>"></td>
       <td class="text-center"><input type="checkbox" name="rijek[]" value="<?=$d['GUID'];?>"></td>
     </tr>

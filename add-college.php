@@ -8,11 +8,15 @@ if(isset($_POST['instansi'])){
 	$nama = $_POST['nama'];
 	$jabatan = $_POST['jabatan'];
 	$alamat = $_POST['alamat'];
-	mysql_query("update institute set INSTITUTE_HEAD='$nama', INSTITUTE_RANK='$jabatan', INSTITUTE_ADDRESS='$alamat' where GUID='$instansi'");
-	// ini buat hapus
-	unset($_SESSION['bikinsekolah']);
-	unset($_SESSION['idsekolah']);
-	eksyen('Thank you','index.php');
+	$a = mysql_query("update institute set INSTITUTE_HEAD='$nama', INSTITUTE_RANK='$jabatan', INSTITUTE_ADDRESS='$alamat' where GUID='$instansi'");
+	if($a){
+		// ini buat hapus
+		unset($_SESSION['bikinsekolah']);
+		unset($_SESSION['idsekolah']);
+		eksyen('Thank you','index.php');
+	}else{
+		eksyen('Gagal','add-college.php');
+	}
 }
 ?>
 <!DOCTYPE html>

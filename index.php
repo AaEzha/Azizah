@@ -376,13 +376,15 @@ if(isset($_SESSION['bikinsekolah'])){
         </div>
       </div>
       <div class="form-group" style="background:#333">
-        <label class="col-sm-4 control-label">Upload Foto</label>
-        <div class="col-sm-2">
+        <label class="col-sm-2 control-label">Upload Foto</label>
+        <div class="col-sm-4">
           <input type="file" name="foto" required>
+          <span class="help-block">Use JPG / JPEG / PNG / GIF only</span>
         </div>
-        <label class="col-sm-1 control-label">Upload CV</label>
-        <div class="col-sm-2">
+        <label class="col-sm-2 control-label">Upload CV</label>
+        <div class="col-sm-4">
           <input type="file" name="cv" required>
+          <span class="help-block">Use PDF / DOC / DOCX only</span>
         </div>
       </div>
       <div class="form-group">
