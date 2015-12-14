@@ -42,14 +42,14 @@ if(!isset($_GET['act'])){
 			$code = mysql_real_escape_string($_POST['code']);
 
 			// filterisasi
-			$b = trim($instansi);
+			$b = trim($code);
 		    $b = explode(" ", $b);
 		    $kecil = "";
 		    foreach ($b as $b){
-		        $kecil = strtolower($b);
+		        $kecil .= strtolower($b);
 		    }
 		    
-			$q = mysql_query("insert into major(GUID,MAJOR_NAME,DTMCRT,USRCRT) values(uuid(),'$code',now(),'$user')");
+			$q = mysql_query("insert into major(GUID,MAJOR_NAME,MAJOR_NAME2,DTMCRT,USRCRT) values(uuid(),'$code','$kecil',now(),'$user')");
 			if($q){
 				eksyen('','?p=major');
 			}else{
