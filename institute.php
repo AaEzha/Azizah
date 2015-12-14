@@ -57,8 +57,16 @@ if(!isset($_GET['act'])){
 			$me = mysql_real_escape_string($_POST['me']);
 			
 			$uuid = mysql_fetch_array(mysql_query("select uuid() as a"));
+
+			// filterisasi
+			$b = trim($code);
+		    $b = explode(" ", $b);
+		    $kecil = "";
+		    foreach ($b as $b){
+		        $kecil .= strtolower($b);
+		    }
 	
-			$q = mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_TYPE,INSTITUTE_NICK,INSTITUTE_HEAD,INSTITUTE_RANK,INSTITUTE_ADDRESS,DTMCRT,USRCRT,MOU_START,MOU_END) values('$uuid[a]','$code','$type','$nick','$head','$rank','$addr',now(),'$user','$ms','$me')");
+			$q = mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_NAME2,INSTITUTE_TYPE,INSTITUTE_NICK,INSTITUTE_HEAD,INSTITUTE_RANK,INSTITUTE_ADDRESS,DTMCRT,USRCRT,MOU_START,MOU_END) values('$uuid[a]','$code','$kecil','$type','$nick','$head','$rank','$addr',now(),'$user','$ms','$me')");
 			if($q){
 				if($_FILES['mou']['name']!=''){
 					//--------------------------photo----------------------------------//
