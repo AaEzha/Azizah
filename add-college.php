@@ -8,7 +8,7 @@ if(isset($_POST['instansi'])){
 	$nama = $_POST['nama'];
 	$jabatan = $_POST['jabatan'];
 	$alamat = $_POST['alamat'];
-	$a = mysql_query("update institute set INSTITUTE_HEAD='$nama', INSTITUTE_RANK='$jabatan', INSTITUTE_ADDRESS='$alamat' where GUID='$instansi'");
+	$a = mysql_query("update institute set INSTITUTE_HEAD='$nama', INSTITUTE_RANK='$jabatan', INSTITUTE_ADDRESS='$alamat', USRUPD='USER', DTMUPD=now() where GUID='$instansi'");
 	if($a){
 		// ini buat hapus
 		unset($_SESSION['bikinsekolah']);

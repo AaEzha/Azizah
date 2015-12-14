@@ -40,6 +40,15 @@ if(!isset($_GET['act'])){
 		if(isset($_POST['code'])){
 			$user = $_SESSION['username'];
 			$code = mysql_real_escape_string($_POST['code']);
+
+			// filterisasi
+			$b = trim($instansi);
+		    $b = explode(" ", $b);
+		    $kecil = "";
+		    foreach ($b as $b){
+		        $kecil = strtolower($b);
+		    }
+		    
 			$q = mysql_query("insert into major(GUID,MAJOR_NAME,DTMCRT,USRCRT) values(uuid(),'$code',now(),'$user')");
 			if($q){
 				eksyen('','?p=major');

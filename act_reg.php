@@ -73,13 +73,20 @@ if(!isset($_POST['noid'])){
     mysql_query("insert into member_of_group(GUID,MS_GROUP_ID,USER_DETAIL_ID,DTMCRT,USRCRT) values(uuid(),'$msgroup_guid','$iduserdetail',now(),'$userid')");
 
     // instansi
-    $qi = mysql_query("select GUID,INSTITUTE_NAME from institute where INSTITUTE_NAME='$instansi'");
+    $b = trim($instansi);
+    $b = explode(" ", $b);
+    $kecil = "";
+    foreach ($b as $b){
+        $kecil .= strtolower($b);
+    }
+    $qi = mysql_query("select GUID,INSTITUTE_NAME,INSTITUTE_NAME2 from institute where INSTITUTE_NAME2='$kecil'");
     $ci = mysql_num_rows($qi);
     if($ci==1){
         $di = mysql_fetch_array($qi);
         $idins = $di['GUID'];
     }else{
-        mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_TYPE,DTMCRT,USRCRT) values(uuid(),'$instansi','',now(),'$userid')");
+        mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_NAME2,INSTITUTE_TYPE,DTMCRT,USRCRT) values(uuid(),'$instansi','$kecil','',now(),'$userid')");
+        $qi = mysql_query("select GUID,INSTITUTE_NAME from institute where INSTITUTE_NAME='$instansi'");
         $di = mysql_fetch_array($qi);
         $idins = $di['GUID'];
         // nanti harus dihapus
@@ -88,13 +95,19 @@ if(!isset($_POST['noid'])){
     }
 
     // jurusan
-    $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME='$jurusan'");
+    $b = trim($jurusan);
+    $b = explode(" ", $b);
+    $kecil = "";
+    foreach ($b as $b){
+        $kecil .= strtolower($b);
+    }
+    $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME2='$kecil'");
     $ci = mysql_num_rows($qi);
     if($ci==1){
         $di = mysql_fetch_array($qi);
         $idjur = $di['GUID'];
     }else{
-        mysql_query("insert into major(GUID,MAJOR_NAME,DTMCRT,USRCRT) values(uuid(),'$jurusan',now(),'$userid')");
+        mysql_query("insert into major(GUID,MAJOR_NAME,MAJOR_NAME2,DTMCRT,USRCRT) values(uuid(),'$jurusan','$kecil',now(),'$userid')");
         $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME='$jurusan'");
         $di = mysql_fetch_array($qi);
         $idjur = $di['GUID'];
