@@ -4,7 +4,7 @@ tabel();
 $_a = mysql_query("select * from user_detail where USER_ID='$iduser'");
 $_b = mysql_fetch_array($_a);
 if($_b['LASTNAME']==''){
-  eksyen('Fill in the blanks','?p=profil_user');
+  eksyen('Please complete your profile.','?p=profil_user');
 }
 ?>
 <!-- Start home section -->

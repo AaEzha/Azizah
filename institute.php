@@ -12,8 +12,8 @@ if(!isset($_GET['act'])){
 			      <th>Institute Name</th>
 			      <th class="col-md-2 text-center">Nickname</th>
 			      <th class="col-md-2 text-center">Type</th>
-			      <th class="col-md-1 text-center">Detail</th>
 			      <th class="col-md-2 text-center">MOU</th>
+			      <th class="col-md-1 text-center">Verified</th>
 			      <th class="col-md-2 text-center">#</th>
 			    </tr>
 			  </thead>
@@ -28,8 +28,8 @@ if(!isset($_GET['act'])){
 			      <td><?php echo $dc['INSTITUTE_NAME'];?></td>
 			      <td class="text-center"><?php echo $dc['INSTITUTE_NICK'];?></td>
 			      <td class="text-center"><?php echo ($dc['INSTITUTE_TYPE'] == "SM") ? "Sekolah" : "Perguruan Tinggi" ;?></td>
-			      <td class="text-center"><?php echo ($dc['INSTITUTE_HEAD']=="") ? "(!)":"OK";?></td>
 			      <td class="text-center"><?php echo ($dc['MOU']=="") ? "-": $dc['MOU_START']." / ".$dc['MOU_END'];?></td>
+			      <td class="text-center"><?php echo ($dc['STATUS']=="0") ? "No":"Yes";?></td>
 			      <td class="text-center">
 			      	<a type="button" class="btn btn-xs btn-primary" href="?p=institute&act=edit&guid=<?php echo $dc['GUID'];?>">Edit</a>
 			      	<a type="button" class="btn btn-xs btn-danger" href="?p=institute&act=delete&guid=<?php echo $dc['GUID'];?>" <?php yakin();?>>Delete</a>
@@ -99,7 +99,7 @@ if(!isset($_GET['act'])){
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">Institute Nickname</label>
 	    <div class="col-sm-4">
-	      <input type="text" class="form-control input-sm" name="nick" placeholder="Institute Nickname" maxlength="4" required>
+	      <input type="text" class="form-control input-sm" name="nick" placeholder="Institute Nickname" maxlength="10" required>
 	    </div>
 	  </div>
 	  <div class="form-group">
@@ -125,6 +125,23 @@ if(!isset($_GET['act'])){
 	    <label class="col-sm-2 control-label">Institute Address</label>
 	    <div class="col-sm-8">
 	      <input type="text" class="form-control input-sm" name="addr" placeholder="Institute Address" >
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">Verified</label>
+	    <div class="col-sm-4">
+	      <div class="radio">
+	      	<label>
+	      		<input type="radio" name="veri" id="inputVeri" value="0" checked="checked">
+	      		Not Verified Yet
+	      	</label>
+	      </div>
+	      <div class="radio">
+	      	<label>
+	      		<input type="radio" name="veri" id="inputVeri" value="1">
+	      		Verified
+	      	</label>
+	      </div>
 	    </div>
 	  </div>
 	  <div class="form-group">

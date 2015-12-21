@@ -6,11 +6,12 @@ $mail = new PHPMailer;
 //$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
 $mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'ssl://smtp.googlemail.com';  // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'donotreply.gmf.aeroasia@gmail.com';                 // SMTP username
-$mail->Password = 'tidakbolehkosong';                           // SMTP password
+$mail->SMTPSecure = "ssl";
+$mail->Host = 'smtp.googlemail.com';  // Specify main and backup SMTP servers
 $mail->Port = 465;                                    // TCP port to connect to
+$mail->Username = 'aaezha@gmail.com';                 // SMTP username
+$mail->Password = 'shithole2020!!!!!';                           // SMTP password
 
 $mail->setFrom('donotreply.gmf.aeroasia@gmail.com', 'GMF AeroAsia');
 $mail->addAddress($_SESSION['emailnya'], $_SESSION['namanya']);     // Add a recipient

@@ -44,7 +44,8 @@ if(isset($_POST['namadepan'])){
 	    $tmp_name  = $_FILES['cv']['tmp_name']; //nama local temp file di server
 	    $file_size = $_FILES['cv']['size']; //ukuran file (dalam bytes)
 		  $file_type = $_FILES['cv']['type']; //tipe filenya (langsung detect MIMEnya)
-        if($file_type!="application/pdf") eksyen('Improper File Type for CV. Use PDF only.','?p=profil_user');
+      $tipe = array("application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf");
+        if(!in_array($file_type, $tipe)) eksyen('Improper File Type for CV. Use DOC/DOCX/PDF only.','?p=profil_user');
 	    $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
 	    $cv = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
 	    $cv = mysql_real_escape_string($cv) or die("Tidak dapat membaca source file"); // parse image ke string
@@ -54,13 +55,20 @@ if(isset($_POST['namadepan'])){
 	}
 
   // instansi
-   $qi = mysql_query("select GUID,INSTITUTE_NAME from institute where INSTITUTE_NAME='$instansi'");
+    $b = trim($instansi);
+    $b = explode(" ", $b);
+    $kecil = "";
+    foreach ($b as $b){
+        $kecil .= strtolower($b);
+    }
+    $qi = mysql_query("select GUID,INSTITUTE_NAME,INSTITUTE_NAME2 from institute where INSTITUTE_NAME2='$kecil'");
     $ci = mysql_num_rows($qi);
     if($ci==1){
         $di = mysql_fetch_array($qi);
         $idins = $di['GUID'];
     }else{
-        mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_TYPE,DTMCRT,USRCRT) values(uuid(),'$instansi','',now(),'$iduser')");
+        mysql_query("insert into institute(GUID,INSTITUTE_NAME,INSTITUTE_NAME2,INSTITUTE_TYPE,DTMCRT,USRCRT) values(uuid(),'$instansi','$kecil','',now(),'$userr')");
+        $qi = mysql_query("select GUID,INSTITUTE_NAME from institute where INSTITUTE_NAME='$instansi'");
         $di = mysql_fetch_array($qi);
         $idins = $di['GUID'];
         // nanti harus dihapus
@@ -69,13 +77,19 @@ if(isset($_POST['namadepan'])){
     }
 
   // jurusan
-    $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME='$jurusan'");
+    $b = trim($jurusan);
+    $b = explode(" ", $b);
+    $kecil = "";
+    foreach ($b as $b){
+        $kecil .= strtolower($b);
+    }
+    $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME2='$kecil'");
     $ci = mysql_num_rows($qi);
     if($ci==1){
         $di = mysql_fetch_array($qi);
         $idjur = $di['GUID'];
     }else{
-        mysql_query("insert into major(GUID,MAJOR_NAME,DTMCRT,USRCRT) values(uuid(),'$jurusan',now(),'$iduser')");
+        mysql_query("insert into major(GUID,MAJOR_NAME,MAJOR_NAME2,DTMCRT,USRCRT) values(uuid(),'$jurusan','$kecil',now(),'$userr')");
         $qi = mysql_query("select GUID,MAJOR_NAME from major where MAJOR_NAME='$jurusan'");
         $di = mysql_fetch_array($qi);
         $idjur = $di['GUID'];
@@ -226,7 +240,7 @@ if(isset($_POST['namadepan'])){
     <div class="col-sm-2">
       <input type="file" name="foto" >
     </div>
-    <label class="col-sm-1 control-label">Upload CV (PDF)</label>
+    <label class="col-sm-1 control-label">Upload CV (DOC/DOCX/PDF)</label>
     <div class="col-sm-2">
       <input type="file" name="cv" >
     </div>
