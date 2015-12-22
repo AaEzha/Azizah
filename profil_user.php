@@ -5,6 +5,8 @@ $a = mysql_query("select * from user where GUID='$iduser'");
 $b = mysql_fetch_array($a);
 $q = mysql_query("select * from user_detail where GUID='$iduserdetail'");
 $d = mysql_fetch_array($q);
+$e = mysql_query("select * from user_education where USER_DETAIL_ID='$iduserdetail'");
+$f = mysql_fetch_array($e);
 if(isset($_POST['namadepan'])){
 	$iduser = $_SESSION['iduser'];
 	$userr = $_SESSION['username'];
@@ -44,8 +46,8 @@ if(isset($_POST['namadepan'])){
 	    $tmp_name  = $_FILES['cv']['tmp_name']; //nama local temp file di server
 	    $file_size = $_FILES['cv']['size']; //ukuran file (dalam bytes)
 		  $file_type = $_FILES['cv']['type']; //tipe filenya (langsung detect MIMEnya)
-      $tipe = array("application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf");
-        if(!in_array($file_type, $tipe)) eksyen('Improper File Type for CV. Use DOC/DOCX/PDF only.','?p=profil_user');
+      $tipe = array("application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf","image/jpeg","image/png","image/gif");
+        if(!in_array($file_type, $tipe)) eksyen('Improper File Type for CV. Use DOC/DOCX/PDF/Image only.','?p=profil_user');
 	    $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
 	    $cv = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
 	    $cv = mysql_real_escape_string($cv) or die("Tidak dapat membaca source file"); // parse image ke string
@@ -216,13 +218,13 @@ if(isset($_POST['namadepan'])){
       <div class="form-group">
         <label class="col-sm-2 control-label">Instansi</label>
         <div class="col-sm-4">
-          <input name="instansi" id="ins" class="form-control input-sm" required="required">
+          <input name="instansi" id="ins" class="form-control input-sm" required="required" value="<?=konvert('institute',$f['INSTITUTE_ID'],'INSTITUTE_NAME');?>">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">Jurusan</label>
         <div class="col-sm-4">
-          <input name="jurusan" id="inputJurusan" class="form-control input-sm" required="required">
+          <input name="jurusan" id="inputJurusan" class="form-control input-sm" required="required" value="<?=konvert('major',$f['MAJOR_ID'],'MAJOR_NAME');?>">
         </div>
       </div>
   <div class="form-group" style="background:#333">
@@ -236,13 +238,15 @@ if(isset($_POST['namadepan'])){
     </div>
   </div>
   <div class="form-group" style="background:#333">
-    <label class="col-sm-4 control-label">Upload Foto (JPEG/JPG/PNG)</label>
+    <label class="col-sm-4 control-label">Upload Foto</label>
     <div class="col-sm-2">
       <input type="file" name="foto" >
+      <span id="helpBlock" class="help-block">Max size: 500kb. File type: JPEG/JPG/PNG</span>
     </div>
-    <label class="col-sm-1 control-label">Upload CV (DOC/DOCX/PDF)</label>
+    <label class="col-sm-1 control-label">Upload CV</label>
     <div class="col-sm-2">
       <input type="file" name="cv" >
+      <span id="helpBlock" class="help-block">Max size: 500kb. File type: DOC/DOCX/PDF/Image</span>
     </div>
   </div>
   <div class="form-group">

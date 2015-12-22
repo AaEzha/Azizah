@@ -1,77 +1,97 @@
-<h1>Quota per Unit</h1>
+<h1 class="title">Quota</h1>
 <?php
-if(isset($_POST['quota'])){
-	$qcek = mysql_query("select * from quota_per_unit");
-	$jcek = mysql_num_rows($qcek);
-	if($jcek==0){
-		$query = 'INSERT INTO quota_per_unit (GUID,UNIT_ID,QUOTA,DTMCRT,USRCRT) VALUES ';
-		$quota = $_POST['quota'];
-		$unit = $_POST['unit'];
-	    $query_parts = array();
-	    for($x=0; $x<count($unit); $x++){
-	        $query_parts[] = "(uuid(),'" . $unit[$x] . "', '" . $quota[$x] . "',now(),'".$_SESSION['username']."')";
-	    }
-	    $query .= implode(',', $query_parts);
 
-	    $q = mysql_query($query);
-	    if($q){
-	    	eksyen('Sukses','?p=quota');
-	    }else{
-	    	eksyen('Gagal','?p=quota');
-	    }
-	}else{
-		$quota = $_POST['quota'];
-		$unit = $_POST['unit'];
-		for($x=0; $x<count($unit); $x++){
-	        $sql = "update quota_per_unit set DTMUPD=now(), USRUPD='".$_SESSION['username']."', QUOTA='".$quota[$x]."' where UNIT_ID='".$unit[$x]."'";
-	        mysql_query($sql);
-	    }
-	    eksyen('Sukses','?p=quota');
-	}
-}
 ?>
-<form action="" method="post">
+<div class="text-center">
+<form action="" method="POST" class="form-inline" role="form">
+
+	<div class="form-group">
+		<label class="sr-only" for="">label</label>
+		<select name="bulan" id="inputBulan" class="form-control input-lg" required="required">
+			<option value="01">January</option>
+			<option value="02">February</option>
+			<option value="03">March</option>
+			<option value="04">April</option>
+			<option value="05">May</option>
+			<option value="06">June</option>
+			<option value="07">July</option>
+			<option value="08">August</option>
+			<option value="09">September</option>
+			<option value="10">October</option>
+			<option value="11">November</option>
+			<option value="12">December</option>
+		</select>
+	</div>
+
+	<div class="form-group">
+		<select name="tahun" id="inputTahun" class="form-control input-lg" required="required">
+		<?php for($x=2015;$x<=2020;$x++){ ?>
+			<option value="<?=$x;?>"><?=$x;?></option>
+		<?php } ?>
+		</select>
+	</div>		
+
+	<button type="submit" name="pilih" class="btn btn-primary input-lg">Check</button>
+</form>
+</div>
+<?php
+if(isset($_POST['pilih'])){
+	$bulan = $_POST['bulan'];
+	$tahun = $_POST['tahun'];
+?>
+	<h2 class="text-center"><?=bulandariangka($bulan);?> <?=$tahun;?></h2>
+	<form action="proses_quota.php" method="post">
 	<?=tabel();?>
-	<table class="table" id="tbl">
+	<table class="table table-bordered table-condensed" id="tbl">
 		<thead>
 			<tr>
-				<th class="col-md-1 text-center">No</th>
-				<th>Unit</th>
-				<th class="col-md-1 text-center">Quota</th>
-				<th class="col-md-1 text-center">Interns</th>
+				<th class="col-lg-1 text-center">No</th>
+				<th>Name</th>
+				<th class="col-lg-1 text-center">Week 1</th>
+				<th class="col-lg-1 text-center">Week 2</th>
+				<th class="col-lg-1 text-center">Week 3</th>
+				<th class="col-lg-1 text-center">Week 4</th>
+				<th class="col-lg-1 text-center">Week 5</th>
 			</tr>
 		</thead>
 		<tbody>
-		<?php
-		$i = 1;
-		$q = mysql_query("select * from unit");
-		while($d = mysql_fetch_array($q)){
-			// jumlah intern per unit
-			$a = mysql_query("select * from internship_registration ir
-							  join unit u on ir.UNIT_ID=u.GUID where u.GUID='".$d['GUID']."'");
-			$ja = mysql_num_rows($a);
-			$da = mysql_fetch_array($a);
-
-			// jumlah quota per unit
-			$b = mysql_query("select * from quota_per_unit where UNIT_ID='".$d['GUID']."'");
-			$db = mysql_fetch_array($b);
-		?>
+			<?php
+			$q = mysql_query("select * from quota where MONTH='$bulan' and YEAR='$tahun'");
+			$i=1;
+			$jum = mysql_num_rows($q);
+			if($jum<1){
+				$username = $_SESSION['username'];
+				mysql_query("insert into quota(GUID,USER_DETAIL_ID,MONTH,YEAR,DTMCRT,USRCRT)
+							select uuid(),ud.GUID,'$bulan','$tahun',now(),'Automation' from user_detail ud
+							join member_of_group mog on mog.user_detail_id=ud.guid
+							join ms_group mg on mg.guid=mog.ms_group_id
+							where mg.group_name='lcu'
+							");
+				$q = mysql_query("select * from quota where MONTH='$bulan' and YEAR='$tahun'");
+			}
+			while($d = mysql_fetch_array($q)){ ?>
 			<tr>
-				<td class="text-center"><?=$i;?></td>
-				<td><?=$d['UNIT_CODE'];?> - <?=$d['UNIT_NAME'];?> <input type="hidden" name="unit[]" id="inputUnit" class="form-control" value="<?=$d['GUID'];?>"></td>
-				<td class="text-center"><input type="text" name="quota[]" id="inputQuota" class="form-control input-sm text-center" value="<?=$db['QUOTA']?$db['QUOTA']:'0';?>" onkeypress="return isNumber(event)" maxlength="3"></td>
-				<td class="text-center"><?=$ja;?></td>
+				<td class="text-center"><?=$i;?></td> 
+				<td><input type="hidden" name="userid<?=$i;?>" id="inputUserid" class="form-control" value="<?=$d['USER_DETAIL_ID'];?>"><?=konvert2('user_detail','guid',$d['USER_DETAIL_ID'],'firstname');?> <?=konvert2('user_detail','guid',$d['USER_DETAIL_ID'],'lastname');?></td>
+				<td><input type="text" name="w1<?=$i;?>" id="inputW11" class="form-control text-center input-sm" value="<?=$d['WEEK1'];?>" required="required" maxlength="3" <?=angka();?>></td>
+				<td><input type="text" name="w2<?=$i;?>" id="inputW12" class="form-control text-center input-sm" value="<?=$d['WEEK2'];?>" required="required" maxlength="3" <?=angka();?>></td>
+				<td><input type="text" name="w3<?=$i;?>" id="inputW13" class="form-control text-center input-sm" value="<?=$d['WEEK3'];?>" required="required" maxlength="3" <?=angka();?>></td>
+				<td><input type="text" name="w4<?=$i;?>" id="inputW14" class="form-control text-center input-sm" value="<?=$d['WEEK4'];?>" required="required" maxlength="3" <?=angka();?>></td>
+				<td><input type="text" name="w5<?=$i;?>" id="inputW15" class="form-control text-center input-sm" value="<?=$d['WEEK5'];?>" required="required" maxlength="3" <?=angka();?>></td>
 			</tr>
-		<?php $i++; } ?>
+			<?php 
+			$i++; 
+			}
+			?>
 		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="2"></td>
-				<td>
-					<button type="submit" class="btn btn-primary btn-block">Update</button>
-				</td>
-				<td></td>
-			</tr>
-		</tfoot>
 	</table>
-</form>
+	<div class="row">
+		<div class="col-lg-offset-4 col-lg-4"><button type="submit" class="btn btn-primary btn-block">Save</button></div>
+	</div>
+		<input type="hidden" name="jum" id="inputJum" class="form-control" value="<?=$jum;?>">
+		<input type="hidden" name="bulan" id="inputBulan" class="form-control" value="<?=$bulan;?>">
+		<input type="hidden" name="tahun" id="inputTahun" class="form-control" value="<?=$tahun;?>">
+	</form>
+<?php	
+}
+?>

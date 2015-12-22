@@ -14,7 +14,8 @@ if(!isset($_POST['program'])){
     $tmp_name  = $_FILES['proposal']['tmp_name']; //nama local temp file di server
     $file_size = $_FILES['proposal']['size']; //ukuran file (dalam bytes)
     $file_type1 = $_FILES['proposal']['type']; //tipe filenya (langsung detect MIMEnya)
-        if($file_type1!="application/pdf") eksyen('Improper File Type for Proposal. Use PDF only.','inside.php#mastersetting');
+    $tipe = array("application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf","image/jpeg","image/png","image/gif");
+        if(!in_array($file_type1, $tipe)) eksyen('Improper File Type for CV. Use DOC/DOCX/PDF/Image only.','home.php#mastersetting');
     $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
     $proposal = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
     $proposal = mysql_real_escape_string($proposal) or die("Tidak dapat membaca source file"); // parse image ke string
@@ -24,8 +25,9 @@ if(!isset($_POST['program'])){
     //--------------------------pengantar----------------------------------//
     $tmp_name  = $_FILES['pengantar']['tmp_name']; //nama local temp file di server
     $file_size = $_FILES['pengantar']['size']; //ukuran file (dalam bytes)
-    $file_type2 = $_FILES['pengantar']['type']; //tipe filenya (langsung detect MIMEnya)
-        if($file_type2!="application/pdf") eksyen('Improper File Type for Pengantar. Use PDF only.','inside.php#mastersetting');
+    $file_type2 = $_FILES['pengantar']['type'];
+    $tipe = array("application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf","image/jpeg","image/png","image/gif");
+        if(!in_array($file_type2, $tipe)) eksyen('Improper File Type for CV. Use DOC/DOCX/PDF/Image only.','home.php#mastersetting');
     $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
     $pengantar = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
     $pengantar = mysql_real_escape_string($pengantar) or die("Tidak dapat membaca source file"); // parse image ke string

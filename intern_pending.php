@@ -33,39 +33,74 @@ if(isset($_POST['iduserdetail'])){
   if(isset($_POST['intern'])){
     $intern = $_POST['intern'];
     for($x=0; $x<count($intern); $x++){
-      // cek dulu, quotanya sudah ada atau belum
-      $q = mysql_query("select * from quota where ".$qw."is NULL and MONTH='$bln' and YEAR='$thn' and TOPIC_ID='".$topik[$x]."'");
+      $cq = mysql_query("select ".$qw." from quota where USER_DETAIL_ID='".$_SESSION['iddetail']."' and MONTH=extract(MONTH from now()) and YEAR=extract(YEAR from now())");
+      $dcq = mysql_fetch_array($cq);
+      if($dcq[$qw]!="0"){
 
-      mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='APPROVED', UNIT_ID='$unitid' where GUID='".$intern[$x]."'");
-      mysql_query("update user_detail set DTMUPD=now(), USRUPD='".$_SESSION['username']."', UNIT_ID='$unitid' where GUID='".$iduserdetail[$x]."'");
-      mysql_query("update quota set DTMUPD=now(), USRUPD='".$_SESSION['username']."', ".$qw."=".$qw."-'1' where TOPIC_ID='".$topik[$x]."'");
+        mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='APPROVED', UNIT_ID='$unitid' where GUID='".$intern[$x]."'");
 
-      // untuk email
-      $_SESSION['namanya'] = data_user_detail($iduserdetail[$x],"FIRSTNAME") ." ". data_user_detail($iduserdetail[$x],"LASTNAME");
-      $_SESSION['emailnya'] = data_user_detail($iduserdetail[$x],"EMAIL");
-      include 'email/clearance.php';
+        mysql_query("update user_detail set DTMUPD=now(), USRUPD='".$_SESSION['username']."', UNIT_ID='$unitid' where GUID='".$iduserdetail[$x]."'");
+
+        mysql_query("update quota set DTMUPD=now(), USRUPD='".$_SESSION['username']."', ".$qw."=".$qw."-'1' where USER_DETAIL_ID='".$_SESSION['iddetail']."' and MONTH=extract(MONTH from now()) and YEAR=extract(YEAR from now())");
+
+        // untuk surat
+          // ambil unit LCU
+          $_idunit = ambildata($_SESSION['iddetail'],'USER_DETAIL','UNIT_ID');
+          $kodeunit = getdata('unit',"GUID='61ddb5a0-7d01-11e5-8cd3-28d244bd1b19'",'UNIT_CODE');
+          // urutan surat
+          $qus = mysql_query("select urut+1 as urut from letter order by urut desc limit 1");
+          $dqus = mysql_fetch_array($qus);
+          $nomorurut = $dqus['urut'];
+          // nomor surat
+          $nomorsurat = "$kodeunit/$nomorurut/".date('Y');
+
+        // input ke table LETTER
+        mysql_query("insert into letter(GUID,NOMOR,IR_ID,JENIS,DTMCRT,USRCRT) values(uuid(),'$nomorsurat','".$intern[$x]."','APPROVED',now(),'".$_SESSION['firstname']."')");
+
+        // untuk email
+        $_SESSION['namanya'] = data_user_detail($iduserdetail[$x],"FIRSTNAME") ." ". data_user_detail($iduserdetail[$x],"LASTNAME");
+        $_SESSION['emailnya'] = data_user_detail($iduserdetail[$x],"EMAIL");
+        include 'email/clearance.php';
+      }
     }
   }
   
   if(isset($_POST['rijek'])){
     $rijek = $_POST['rijek'];
     for($y=0; $y<count($rijek); $y++){
-      mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='REJECTED', UNIT_ID='$unitid' where GUID='".$rijek[$y]."'");
+      $cq = mysql_query("select ".$qw." from quota where USER_DETAIL_ID='".$_SESSION['iddetail']."' and MONTH=extract(MONTH from now()) and YEAR=extract(YEAR from now())");
+      $dcq = mysql_fetch_array($cq);
+      if($dcq[$qw]!="0"){
 
-      // untuk email
-      $_SESSION['namanya'] = data_user_detail($iduserdetail[$y],"FIRSTNAME") ." ". data_user_detail($iduserdetail[$y],"LASTNAME");
-      $_SESSION['emailnya'] = data_user_detail($iduserdetail[$y],"EMAIL");
-      include 'email/rejection.php';
+        mysql_query("update internship_registration set DTMUPD=now(), USRUPD='".$_SESSION['username']."', STATUS='REJECTED', UNIT_ID='$unitid' where GUID='".$rijek[$y]."'");
+
+        // untuk surat
+          // ambil unit LCU
+          $_idunit = ambildata($_SESSION['iddetail'],'USER_DETAIL','UNIT_ID');
+          $kodeunit = getdata('unit',"GUID='61ddb5a0-7d01-11e5-8cd3-28d244bd1b19'",'UNIT_CODE');
+          // urutan surat
+          $qus = mysql_query("select urut+1 as urut from letter order by urut desc limit 1");
+          $dqus = mysql_fetch_array($qus);
+          $nomorurut = $dqus['urut'];
+          // nomor surat
+          $nomorsurat = "$kodeunit/$nomorurut/".date('Y');
+
+        // input ke table LETTER
+        mysql_query("insert into letter(GUID,NOMOR,IR_ID,JENIS,DTMCRT,USRCRT) values(uuid(),'$nomorsurat','".$rijek[$y]."','REJECTED',now(),'".$_SESSION['firstname']."')");
+
+        // untuk email
+        $_SESSION['namanya'] = data_user_detail($iduserdetail[$y],"FIRSTNAME") ." ". data_user_detail($iduserdetail[$y],"LASTNAME");
+        $_SESSION['emailnya'] = data_user_detail($iduserdetail[$y],"EMAIL");
+        include 'email/rejection.php';
+      }
     }
   }
-/*
-	foreach ($_POST['intern'] as $intern) {
-		mysql_query("update internship_registration set STATUS='APPROVED', UNIT_ID='$unitid' where GUID='$intern'");
-	}
-	foreach ($_POST['iduserdetail'] as $iduserdetail) {
-		mysql_query("update user_detail set UNIT_ID='$unitid' where GUID='$iduserdetail'");
-	}
-*/
+
+  // konfirmasi kalau quota sudah habis
+  if($dcq[$qw]=='0'){
+    eksyen('Sorry! Your weekly quota is up',"?p=intern_pending");
+  }
+  
 	eksyen('Saved!','home.php#internship');
 }
 ?>

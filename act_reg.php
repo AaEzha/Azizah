@@ -42,8 +42,8 @@ if(!isset($_POST['noid'])){
     $tmp_name  = $_FILES['cv']['tmp_name']; //nama local temp file di server
     $file_size = $_FILES['cv']['size']; //ukuran file (dalam bytes)
     $file_type2 = $_FILES['cv']['type'];
-    $tipe = array("application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf");
-        if(!in_array($file_type2, $tipe)) eksyen('Improper File Type for CV. Use DOC/DOCX/PDF only.','index.php#register');
+    $tipe = array("application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf","image/jpeg","image/png","image/gif");
+        if(!in_array($file_type2, $tipe)) eksyen('Improper File Type for CV. Use DOC/DOCX/PDF/Image only.','index.php#register');
     $fp = fopen($tmp_name, 'r'); // open file (read-only, binary)
     $cv = fread($fp, $file_size) or die("Tidak dapat membaca source file"); // read file
     $cv = mysql_real_escape_string($cv) or die("Tidak dapat membaca source file"); // parse image ke string

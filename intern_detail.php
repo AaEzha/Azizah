@@ -100,12 +100,12 @@ elseif($_SESSION['grup']=='LCU')
 			<h3 class="panel-title"><img src="tampil.php?u=<?=$d['USER_DETAIL_ID'];?>" width="128"></h3>
 		</div>
 	</div>
-    <?php if($statusnya!="REJECTED" or $statusnya=="PENDING"){ ?>
-	<a href="#" class="btn btn-success btn-block" title="Clearance Letter"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Clearance Letter</a>
+    <?php if($statusnya=="APPROVED"){ ?>
+	<a href="letter_approved.php?id=<?=$id;?>" target="_blank" class="btn btn-success btn-block" title="Clearance Letter"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Clearance Letter</a>
     <?php } ?>
 
     <?php if($statusnya=="REJECTED"){ ?>
-    <a href="#" class="btn btn-danger btn-block" title="Rejection Letter"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Rejection Letter</a>
+    <a href="letter_rejected.php?id=<?=$id;?>" target="_blank" class="btn btn-danger btn-block" title="Rejection Letter"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Rejection Letter</a>
     <?php } ?>
 
     <?php if($statusnya=="FINISHED"){ ?>

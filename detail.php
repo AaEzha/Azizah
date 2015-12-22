@@ -6,7 +6,7 @@ $d = mysql_fetch_array($q);
 
 ?>
 <h1 class="text-center">Internship Detail</h1>
-<table class="table">
+<table class="table table-bordered table-condensed">
 	<tr>
 		<td class="col-md-1"><p>Title</p></td>
 		<td><p><?=$d['PROGRAM_NAME'];?></p></td>
@@ -21,6 +21,6 @@ $d = mysql_fetch_array($q);
 	</tr>
 	<tr>
 		<td>Periode</td>
-		<td><?=$d['PROGRAM_START'];?> - <?=$d['PROGRAM_END'];?></td>
+		<td><?=tanggal($d['PROGRAM_START']);?> s.d. <?=tanggal($d['PROGRAM_END']);?></td>
 	</tr>
 </table>

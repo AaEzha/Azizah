@@ -54,18 +54,40 @@ if($_b['LASTNAME']==''){
                             <h3><strong>INTERNSHIP PROCESS</strong></h3>
                       </div>
                   </div>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                <table width="30%" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <script type="text/javascript">
+                    $(document).ready(function() {
+                      $('#notmyvideo').hide();
+                    )};
+                    </script>
+                    <table width="30%" border="0" align="center" cellpadding="0" cellspacing="0">
                       <tr>
-                        <td><div align="center"><a href="video/My_Movie.mp4" target="_blank"><img src="images/play_btn.png" width="71" height="71"></a></div></td>
+                        <td>
+                          <div align="center">
+                            <!--
+                            <div id="notmyvideo">
+                              <a href="video/My_Movie.mp4" target="_blank"><img src="images/play_btn.png" width="71" height="71"></a>
+                            </div>
+                            <div id="myvideo">
+                              
+                              <link href="http://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet">
+                              <script src="http://vjs.zencdn.net/ie8/1.1.1/videojs-ie8.min.js"></script>
+                              <script src="http://vjs.zencdn.net/5.4.4/video.js"></script>
+                              <video id="my-video" class="video-js" controls preload="auto" width="640" poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+                                <source src="video/My_Movie.mp4" type='video/mp4'>
+                                <p class="vjs-no-js">
+                                To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                </p>
+                              </video>
+                              -->
+                              <video height="400" controls>
+                                <source src="video/My_Movie.mp4" type="video/mp4">
+                              Your browser does not support the video tag. Please use another new-upgraded browser.
+                              </video> 
+                            </div>
+                          </div>
+                        </td>
                       </tr>
                     </table>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
               </div>
                 <p>&nbsp;</p>
 </div>
@@ -152,6 +174,8 @@ if($_b['LASTNAME']==''){
               }
             });
 
+            /*
+
             $("#inputTopik").change(function(){
                 var topik = $(this).val();
                 $.ajax({
@@ -175,6 +199,8 @@ if($_b['LASTNAME']==''){
                     }
                 });
             });
+
+            */
           });
         </script>
           <p>Sebagai perusahaan yang senantiasa peduli dengan dunia pendidikan kami memberikan kesempatan bagi siswa/i tingkat SMA/SMK/SMEA/ST dan mahasiswa/i yang ingin mengikuti PKL/KP/Penelitian Skripsi/Thesis dan Magang Industri.</p>
@@ -219,10 +245,12 @@ if($_b['LASTNAME']==''){
                 <?php } ?>
                 </select>
               </div>
+              <!--
               <label for="inputQuota" class="col-sm-1 control-label">Quota</label>
               <div class="col-sm-2">
                 <input type="text" name="quota" id="inputQuota" class="form-control input-sm" value="" disabled="">
               </div>
+              -->
             </div>
             <div class="form-group" id="fprojek">
               <label for="inputprojek" class="col-sm-2 control-label">Projek</label>
@@ -232,7 +260,7 @@ if($_b['LASTNAME']==''){
                 <?php
                 $app = mysql_query("select * from program order by PROGRAM_NAME asc");
                 while($ap = mysql_fetch_array($app)){ ?>
-                  <option value="<?=$ap['GUID'];?>" <?php if($dcek['PROGRAM_ID']==$ap['GUID']) echo "selected"; ?>><?=$ap['PROGRAM_NAME'];?></option>
+                  <option value="<?=$ap['GUID'];?>" <?php if($dcek['INTERNSHIP_PROJECT_ID']==$ap['GUID']) echo "selected"; ?>><?=$ap['PROGRAM_NAME'];?></option>
                 <?php } ?>
                 </select>
               </div>
@@ -249,17 +277,17 @@ if($_b['LASTNAME']==''){
               </div>
             </div>
             <div class="form-group">
-              <label for="inputProposal" class="col-sm-2 control-label">Proposal (PDF)</label>
+              <label for="inputProposal" class="col-sm-2 control-label">Proposal</label>
               <div class="col-sm-10">
                 <input type="file" name="proposal" id="inputProposal">
-                <span id="helpBlock" class="help-block">Max size: 500kb</span>
+                <span id="helpBlock" class="help-block">Max size: 500kb. File type: DOC/DOCX/PDF/Image</span>
               </div>
             </div>
             <div class="form-group">
-              <label for="inputpengantar" class="col-sm-2 control-label">Surat Pengantar (PDF)</label>
+              <label for="inputpengantar" class="col-sm-2 control-label">Surat Pengantar</label>
               <div class="col-sm-10">
                 <input type="file" name="pengantar" id="inputpengantar">
-                <span id="helpBlock" class="help-block">Max size: 500kb</span>
+                <span id="helpBlock" class="help-block">Max size: 500kb. File type: DOC/DOCX/PDF/Image</span>
               </div>
             </div>
             <div class="form-group">
@@ -307,10 +335,12 @@ if($_b['LASTNAME']==''){
                 <?php } ?>
                 </select>
               </div>
+              <!--
               <label for="inputQuota" class="col-sm-1 control-label">Quota</label>
               <div class="col-sm-2">
                 <input type="text" name="quota" id="inputQuota" class="form-control input-sm" value="" disabled="">
               </div>
+              -->
             </div>
             <div class="form-group" id="fprojek">
               <label for="inputprojek" class="col-sm-2 control-label">Projek</label>
@@ -337,15 +367,17 @@ if($_b['LASTNAME']==''){
               </div>
             </div>
             <div class="form-group">
-              <label for="inputProposal" class="col-sm-2 control-label">Proposal (PDF)</label>
+              <label for="inputProposal" class="col-sm-2 control-label">Proposal</label>
               <div class="col-sm-10">
                 <input type="file" name="proposal" id="inputProposal" required="required">
+                <span id="helpBlock" class="help-block">Max size: 500kb. File type: DOC/DOCX/PDF/Image</span>
               </div>
             </div>
             <div class="form-group">
-              <label for="inputpengantar" class="col-sm-2 control-label">Surat Pengantar (PDF)</label>
+              <label for="inputpengantar" class="col-sm-2 control-label">Surat Pengantar</label>
               <div class="col-sm-10">
                 <input type="file" name="pengantar" id="inputpengantar" required="required">
+                <span id="helpBlock" class="help-block">Max size: 500kb. File type: DOC/DOCX/PDF/Image</span>
               </div>
             </div>
             <div class="form-group">
@@ -380,7 +412,7 @@ if($_b['LASTNAME']==''){
 <?php if($_SESSION['grup']=='USER'){ ?>
 <!-- Start title section -->
 <div class="title">
-  <h1 style="color:#33c6f4">History</h1>
+  <h1 style="color:#33c6f4">Histori</h1>
 </div>
 <table class="table table-condensed" id="tbl">
   <thead>
@@ -388,7 +420,7 @@ if($_b['LASTNAME']==''){
       <th class="col-md-1 text-center">No</th>
       <th class="col-md-2 text-center">Program / Instansi</th>
       <th class="col-md-2 text-center">Jurusan</th>
-      <th class="col-md-2 text-center">Topik/Referensi</th>
+      <th class="col-md-2 text-center">Topik/Projek</th>
       <th class="col-md-2 text-center">Periode</th>
       <th class="text-center">Status</th>
       <th class="col-md-1 text-center">Aksi</th>

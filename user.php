@@ -27,9 +27,9 @@ if(!isset($_GET['act'])){
             <td class="text-center"><?php echo $i;?></td>
             <td><?php echo $dc['USERNAME'];?></td>
             <td class="text-center"><?php echo group_name($dc['GUID'],'GROUP_NAME');?></td>
-            <td class="text-center"><?=($dc['ISLOGIN']==0)?"No":"Yes";?></td>
-            <td class="text-center"><?=($dc['VERIFIED']==0)?"No":"Yes";?></td>
-            <td class="text-center"><?php echo $dc['LASTLOGIN'];?></td>
+            <td class="text-center"><?=($dc['ISLOGIN']==0)?"No":"Logged";?></td>
+            <td class="text-center"><?=($dc['VERIFIED']==0)?"No":"Verified";?></td>
+            <td class="text-center" title="<?=$dc['LASTLOGIN'];?>"><?php echo time_ago($dc['LASTLOGIN']);?></td>
             <td class="text-center">
               <a type="button" class="btn btn-xs btn-primary" href="?p=user&act=edit&guid=<?php echo $dc['GUID'];?>">Edit</a>
               <a type="button" class="btn btn-xs btn-danger" href="?p=user&act=delete&guid=<?php echo $dc['GUID'];?>" <?php yakin();?>>Delete</a>

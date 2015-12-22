@@ -15,8 +15,71 @@ function cekbok($a,$b){
 	}
 }
 
+function bulandariangka($bln){
+	switch ($bln) {
+		case '01':
+			$a = "January";
+			break;
+		case '02':
+			$a = "February";
+			break;
+		case '03':
+			$a = "March";
+			break;
+		case '04':
+			$a = "April";
+			break;
+		case '05':
+			$a = "May";
+			break;
+		case '06':
+			$a = "June";
+			break;
+		case '07':
+			$a = "July";
+			break;
+		case '08':
+			$a = "August";
+			break;
+		case '09':
+			$a = "September";
+			break;
+		case '10':
+			$a = "October";
+			break;
+		case '11':
+			$a = "November";
+			break;
+		case '12':
+			$a = "December";
+			break;
+		
+		default:
+			$a = "";
+			break;
+	}
+
+	return $a;
+}
+
+function konvert($tabel,$id,$kolom){
+	$q = mysql_query("select $kolom from $tabel where GUID='$id'");
+	$d = mysql_fetch_array($q);
+	return $d[$kolom];
+}
+
+function konvert2($tabel,$key,$val,$kolom){
+	$q = mysql_query("select $kolom from $tabel where $key='$val'");
+	$d = mysql_fetch_array($q);
+	return $d[$kolom];
+}
+
 function tabel(){
 	echo "\n<script>$(document).ready(function(){ $('#tbl,#tbl2,#tbl3').dataTable();});</script>";
+}
+
+function angka(){
+	echo 'onkeypress="return isNumber(event)"';
 }
 
 function yakin(){
@@ -315,5 +378,21 @@ function ambiltesti($id){
 	$q = mysql_query("select * from testimonial where INTERN_ID='$id'");
 	$d = mysql_fetch_array($q);
 	return $d['TESTIMONY'];
+}
+
+function tanggal($tgl){
+	$date = new DateTime($tgl);
+	return $date->format('D, d M Y');	// ('D, d M Y H:i:s');
+}
+
+function TanggalIndo($date){
+	$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+ 
+	$tahun = substr($date, 0, 4);
+	$bulan = substr($date, 5, 2);
+	$tgl   = substr($date, 8, 2);
+ 
+	$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;		
+	return($result);
 }
 ?>

@@ -309,9 +309,5 @@ if(isset($_GET['p'])){
 	<a href="?p=intern_detail&i=<?=$dnotif['id'];?>" class="btn btn-warning btn-lg" title="You have a message!"><span class="glyphicon glyphicon-envelope"></span></a>
   <?php } ?>
 </div>
-<?php
-// update quota
-cekquotatopik();
-?>  
 </body>
 </html>
