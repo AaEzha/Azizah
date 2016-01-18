@@ -56,6 +56,7 @@ if(isset($_POST['iduserdetail'])){
 
         // input ke table LETTER
         mysql_query("insert into letter(GUID,NOMOR,IR_ID,JENIS,DTMCRT,USRCRT) values(uuid(),'$nomorsurat','".$intern[$x]."','APPROVED',now(),'".$_SESSION['firstname']."')");
+        mysql_query("insert into letter(GUID,NOMOR,IR_ID,JENIS,DTMCRT,USRCRT) values(uuid(),'$nomorsurat','".$intern[$x]."','ACHIEVEMENT',now(),'".$_SESSION['firstname']."')");
 
         // untuk email
         $_SESSION['namanya'] = data_user_detail($iduserdetail[$x],"FIRSTNAME") ." ". data_user_detail($iduserdetail[$x],"LASTNAME");
@@ -131,7 +132,16 @@ if(isset($_POST['iduserdetail'])){
       </td>
       <td class="text-center"><?=ambildata($d['USER_DETAIL_ID'],'user_detail','FIRSTNAME');?></td>
       <td class="text-center"><?=ambildata($d['PROGRAM_ID'],'internship_program','PROGRAM');?></td>
-      <td class="text-center"><?=ambildata($d['MASTER_TOPIC_ID'],'master_topic','TOPIC_NAME');?></td>
+      <td class="text-center">
+        <?php
+        $pr = ambildata($d['PROGRAM_ID'],'internship_program','PROGRAM');
+        if($pr == "Magang Industri"){
+          echo ambildata($d['INTERNSHIP_PROJECT_ID'],'program','PROGRAM_NAME');
+        }else{
+          echo ambildata($d['MASTER_TOPIC_ID'],'master_topic','TOPIC_NAME');
+        }
+        ?>
+      </td>
       <td class="text-center"><a href="?p=intern_detail&i=<?=$d['GUID'];?>" class="btn btn-info btn-sm" title="Internship Detail">Detail</a></td>
       <td class="text-center"><input type="checkbox" name="intern[]" value="<?=$d['GUID'];?>"></td>
       <td class="text-center"><input type="checkbox" name="rijek[]" value="<?=$d['GUID'];?>"></td>

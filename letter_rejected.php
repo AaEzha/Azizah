@@ -51,8 +51,7 @@ Di tempat</p>
 
 <p>&nbsp;</p>
 
-<p><b><?=$dqts['S_NAME'];?></b><br>
-<i>(Ditandatangani)</i></p>
+<p><b><?=$dqts['S_NAME'];?></b></p>
 
 <?php
 $content = ob_get_clean();

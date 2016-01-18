@@ -24,9 +24,10 @@
 		$_username = $d['username'];
 
 		// ambil data user_detail
-		$qud = mysql_query("select firstname,guid as iddetail from user_detail where user_id='$d[iduser]'");
+		$qud = mysql_query("select firstname,lastname,guid as iddetail from user_detail where user_id='$d[iduser]'");
 		$dud = mysql_fetch_array($qud);
 		$_SESSION['firstname'] = $dud['firstname'];
+		$_SESSION['namalengkap'] = $dud['firstname'] ." ". $dud['lastname'];
 		$_SESSION['iddetail'] = $dud['iddetail'];
 
 		// ambil grup user

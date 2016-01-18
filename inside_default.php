@@ -44,6 +44,7 @@ if($_b['LASTNAME']==''){
       </div>
     </div>
 <!-- End home section -->
+
 <!-- Video section start -->
     <div class="section fourth-section" id="video">
         <div class="section fourth-section">
@@ -132,10 +133,10 @@ if($_b['LASTNAME']==''){
       </tr>
       <tr>
         <td width="33%" height="113" bgcolor="#33C6F4"><div align="center" class="style39"><a href="?p=letter" class="style38">LETTER</a></div></td>
-        <td width="33%" height="113" bgcolor="#89E1F3"><div align="center" class="style30"><a href="?p=major" class="style38">xxx</a></div></td>
+        <td width="33%" height="113" bgcolor="#89E1F3"><div align="center" class="style30"><a href="?p=assesment" class="style38">ASSESSMENT</a></div></td>
         <td width="33%" height="113" bgcolor="#0F91AC"><div align="center" class="style39">
           <div align="center">
-            <p><a href="?p=education-level"  class="style1"><strong>xxx</strong></a></p>
+            <p><a href="?p=report"  class="style1"><strong>REPORT</strong></a></p>
             </div>
         </div></td>
       </tr>
@@ -160,18 +161,20 @@ if($_b['LASTNAME']==''){
         <script type="text/javascript">
           $(document).ready(function() {
             $('#fprojek').hide();
-            $('#dprojek').hide();
+            $('#dialog-message').hide();
             $('#inputProgram').change(function(){
               var grup = $(this).val();
               if(grup == "5b735728-7db6-11e5-8cd3-28d244bd1b19"){
                 $('#fprojek').show();
-				$('#dprojek').show();
                 $('#ftopik').hide();
               }else{
                 $('#fprojek').hide();
-				$('#dprojek').hide();
                 $('#ftopik').show();
               }
+
+            $('#dprojek').click(function(){
+              $('#dialog-message').dialog();
+            });
             });
 
             /*
@@ -203,6 +206,7 @@ if($_b['LASTNAME']==''){
             */
           });
         </script>
+
           <p>Sebagai perusahaan yang senantiasa peduli dengan dunia pendidikan kami memberikan kesempatan bagi siswa/i tingkat SMA/SMK/SMEA/ST dan mahasiswa/i yang ingin mengikuti PKL/KP/Penelitian Skripsi/Thesis dan Magang Industri.</p>
           <p>Silahkan dilengkapi:</p>
           <?php
@@ -264,7 +268,7 @@ if($_b['LASTNAME']==''){
                 <?php } ?>
                 </select>
               </div>
-			  <div id="dprojek"></div>
+			  <div id="dprojek">asdsad</div>
             </div>
             <div class="form-group">
               <label for="mulai" class="col-sm-2 control-label">Tanggal Mulai</label>
@@ -353,8 +357,10 @@ if($_b['LASTNAME']==''){
                   <option value="<?=$ap['GUID'];?>" <?php if($dcek['PROGRAM_ID']==$ap['GUID']) echo "selected"; ?>><?=$ap['PROGRAM_NAME'];?></option>
                 <?php } ?>
                 </select>
-              </div>
-			  <div id="dprojek"></div>
+              </div>	
+              <div class="col-sm-5">
+                <div id="dprojek"><a href="home.php?p=detail" target="_blank" class="btn btn-primary btn-xs">Detail</a></div>
+              </div>		  
             </div>
             <div class="form-group">
               <label for="mulai" class="col-sm-2 control-label">Tanggal Mulai</label>

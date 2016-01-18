@@ -83,7 +83,16 @@ if(isset($_GET['a']) and isset($_GET['x']))
       </td>
       <td class="text-center"><?=ambildata($d['USER_DETAIL_ID'],'user_detail','FIRSTNAME');?></td>
       <td class="text-center"><?=ambildata($d['PROGRAM_ID'],'internship_program','PROGRAM');?></td>
-      <td class="text-center"><?=ambildata($d['MASTER_TOPIC_ID'],'master_topic','TOPIC_NAME');?></td>
+      <td class="text-center">
+        <?php
+        $pr = ambildata($d['PROGRAM_ID'],'internship_program','PROGRAM');
+        if($pr == "Magang Industri"){
+          echo ambildata($d['INTERNSHIP_PROJECT_ID'],'program','PROGRAM_NAME');
+        }else{
+          echo ambildata($d['MASTER_TOPIC_ID'],'master_topic','TOPIC_NAME');
+        }
+        ?>
+      </td>
       <td class="text-center"><?=$d['START_DATE'];?> / <?=$d['END_DATE'];?></td>
       <td class="text-center"><?=$d['STATUS'];?></td>
       <td class="text-center">
@@ -91,7 +100,7 @@ if(isset($_GET['a']) and isset($_GET['x']))
           <a href="?p=intern_detail&i=<?=$d['GUID'];?>" class="btn btn-info btn-sm" title="Internship Detail">Detail</a>
           <?php if($_SESSION['grup']=="LCU"){ ?>
             <?php if($d['STATUS']=="APPROVED"){ ?>
-            <a href="?p=intern&i=<?=$d['GUID'];?>&a=<?=md5('start');?>&x=<?=md5($d['GUID']);?>" class="btn btn-primary btn-sm" title="Start Internship">Start</a>
+            <a href="?p=intern&i=<?=$d['GUID'];?>&a=<?=md5('start');?>&x=<?=md5($d['GUID']);?>" class="btn btn-primary btn-sm" title="Start Internship" <?=yakin();?>>Start</a>
             <?php } ?>
             <?php if($d['STATUS']=="IN PROGRESS"){ ?>
             <a href="?p=intern_assessment&i=<?=$d['GUID'];?>" class="btn btn-primary btn-sm" title="Fill in the Assessment">Assessment</a>

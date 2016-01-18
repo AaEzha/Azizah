@@ -293,11 +293,11 @@ if(isset($_SESSION['bikinsekolah'])){
       <div class="form-group">
         <label class="col-sm-2 control-label">Telepon 1</label>
         <div class="col-sm-4">
-          <input type="tel" name="tel1" id="inputTel1" class="form-control input-sm" value="" required="required" title="">
+          <input type="tel" name="tel1" id="inputTel1" class="form-control input-sm" value="" required="required" title="" onkeypress="return isNumber(event)">
         </div>
         <label class="col-sm-2 control-label">Telepon 2</label>
         <div class="col-sm-4">
-          <input type="tel" name="tel2" id="inputTel2" class="form-control input-sm" value="" required="required" title="">
+          <input type="tel" name="tel2" id="inputTel2" class="form-control input-sm" value="" required="required" title="" onkeypress="return isNumber(event)">
         </div>
       </div>
       <div class="form-group">

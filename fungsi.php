@@ -83,7 +83,7 @@ function angka(){
 }
 
 function yakin(){
-	echo "onClick=\"return confirm('Apakah Anda yakin akan melakukan aksi ini?');\" ";
+	echo "onClick=\"return confirm('Are you sure to do this task? This task cannot be undone.');\" ";
 }
 
 function eksyen($teks=false,$tujuan){ // buat pindah halaman
@@ -304,60 +304,37 @@ function cekquotatopik(){
 	}
 }
 
-function cekgrade($n){
-	if($n>=1 and $n<=24){
-		$g = "F";
-	}elseif($n>=25 and $n<=29){
-		$g = "E-";
-	}elseif($n>=30 and $n<=34){
-		$g = "E";
-	}elseif($n>=35 and $n<=39){
-		$g = "E+";
-	}elseif($n>=40 and $n<=44){
-		$g = "D-";
-	}elseif($n>=45 and $n<=49){
-		$g = "D";
-	}elseif($n>=50 and $n<=54){
-		$g = "D+";
-	}elseif($n>=55 and $n<=59){
-		$g = "C-";
-	}elseif($n>=60 and $n<=64){
-		$g = "C";
-	}elseif($n>=65 and $n<=69){
-		$g = "C+";
-	}elseif($n>=70 and $n<=74){
-		$g = "B-";
-	}elseif($n>=75 and $n<=79){
-		$g = "B";
-	}elseif($n>=80 and $n<=84){
-		$g = "B+";
-	}elseif($n>=85 and $n<=89){
-		$g = "A-";
-	}elseif($n>=90 and $n<=94){
-		$g = "A";
-	}elseif($n>=95 and $n<=99){
-		$g = "A+";
-	}elseif($n==100){
+function cekgrade($tot){
+	if($tot<=100 and $tot>=90){
 		$g = "I";
+	}elseif($tot<=89 and $tot>=80){
+		$g = "A";
+	}elseif($tot<=79 and $tot>=65){
+		$g = "B";
+	}elseif($tot<=64 and $tot>=56){
+		$g = "C";
+	}elseif($tot<=55 and $tot>=0){
+		$g = "D";
 	}else{
 		$g = FALSE;
 	}
+	return $g;
 	return $g;
 }
 
 function totgrade($n)
 {
-	$tot = $n/14;
-	if($tot<=100 and $tot>=91){
+	$tot = $n/10;
+	if($tot<=100 and $tot>=90){
+		$g = "I";
+	}elseif($tot<=89 and $tot>=80){
 		$g = "A";
-	}elseif($tot<=90 and $tot>=61){
+	}elseif($tot<=79 and $tot>=65){
 		$g = "B";
-	}elseif($tot<=60 and $tot>=41){
+	}elseif($tot<=64 and $tot>=56){
 		$g = "C";
-	}elseif($tot<=40 and $tot>=21){
+	}elseif($tot<=55 and $tot>=0){
 		$g = "D";
-	}elseif($tot<=20 and $tot>=0){
-		$g = "E";
 	}else{
 		$g = FALSE;
 	}

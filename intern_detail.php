@@ -117,8 +117,13 @@ elseif($_SESSION['grup']=='LCU')
     $dqa = mysql_num_rows($qa);
     if($dqa==TRUE){
     ?>
-    <a href="#" class="btn btn-warning btn-block" title="Achievement Letter"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Achievement Letter</a>
+    <?php if($_SESSION['grup']!='ADMIN'){ ?>
+    <a href="?p=intern_achievement&i=<?=$_GET['i'];?>" class="btn btn-warning btn-block" title="Achievement Letter"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Achievement Letter</a>
     <a href="?p=intern_assessment&i=<?=$_GET['i'];?>" class="btn btn-primary btn-block" title="Your Points"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Assessment Points</a>
+    <?php }else{ ?>
+    <a href="letter_achievement.php?i=<?=$_GET['i'];?>" class="btn btn-warning btn-block" title="Achievement Letter"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Print Achievement</a>
+    <a href="letter_assessment.php?i=<?=$_GET['i'];?>" class="btn btn-primary btn-block" target="_blank"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Print Assessment</a>
+    <?php } ?>
     <?php } ?>
 
     <?php if($statusnya=="DONE"){ ?>
